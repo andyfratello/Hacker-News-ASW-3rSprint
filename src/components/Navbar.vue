@@ -23,16 +23,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Navbar'
-}
-</script>
-
 <style scoped>
 .pure-menu {
   background-color: #ef6537;
 }
+
 .pure-menu a {
   color: black;
 }

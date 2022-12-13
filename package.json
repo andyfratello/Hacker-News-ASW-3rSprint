@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
+    "vue-composition-api": "^0.0.1",
+    "vue-function-api": "^3.0.0-beta.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
