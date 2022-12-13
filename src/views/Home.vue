@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div ref-if="loading">
+    <div v-if="loading">
       <h3>Loading...</h3>
     </div>
     <div>
@@ -38,7 +38,9 @@ export default {
 
 <style scoped>
 .home {
+  counter-reset: microposts;
   background-color: #f6f6ef;
+  padding-left: 2em
 }
 
 </style>
