@@ -6,6 +6,7 @@ import Threads from '@/views/Threads'
 import Ask from '@/views/Ask'
 import Submit from '@/views/Submit'
 import Profile from '@/views/Profile'
+import Single from '@/views/Single'
 import VueTimeago from 'vue-timeago'
 
 Vue.use(VueTimeago, {
@@ -46,6 +47,11 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/micropost/:id',
+      name: 'Single',
+      component: Single
     }
   ]
 })

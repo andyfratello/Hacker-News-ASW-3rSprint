@@ -1,7 +1,8 @@
 <template>
   <div class="microposts-item">
-    <p class="microposts-item-title"><b>{{ item.title }}</b> <a :href="item.url"
-                                                         class='microposts-item-details'>{{ item.url }}</a>
+    <p class="microposts-item-title">
+      <router-link :to="{ path: 'micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
+      <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
     </p>
     <p class="microposts-item-details">{{ item.likes_count }} points by {{ item.creator_name }}
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
@@ -36,4 +37,31 @@ export default {
   margin-top: -0.5em;
 }
 
+.microposts-item-url {
+  font-size: 0.7em;
+  color: #828282;
+  margin-top: -0.5em;
+  text-decoration: none;
+}
+
+.microposts-item-url:hover {
+  font-size: 0.7em;
+  color: #828282;
+  margin-top: -0.5em;
+  text-decoration: underline;
+}
+
+.micropost-title {
+  font-size: 1.1em;
+  color: rgba(7, 13, 13, 0.95);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.micropost-title:visited {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: none;
+  color: #828282;
+}
 </style>
