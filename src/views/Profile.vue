@@ -16,7 +16,22 @@
           </b>
         </p>
         <p>Api Key: {{ user.api_key }}</p>
-        <p class="user-links">submissions</p>
+        <tr>
+          <td class="link_stories">
+            <a href="/microposts?user=<%= @user.id %>">
+              <p class="link_stories">submissions</p>
+            </a>
+          </td>
+        </tr>
+        <!--
+        <tr>
+          <td class="link_comments">
+            <a href="/users/<%= @user.id %>/comments">
+              <p class="link_comments">comments</p>
+            </a>
+          </td>
+        </tr>
+        -->
         <p class="user-links">comments</p>
         <p><span class="user-links">upvoted submissions</span> <span>/</span><span class="user-links-comments">comments</span>
         </p>
