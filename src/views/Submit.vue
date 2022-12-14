@@ -31,7 +31,7 @@ export default {
       var text = document.getElementsByName('text')[0].value
 
       var xmlhttp = new XMLHttpRequest()
-      xmlhttp.open('POST', 'https://thawing-garden-28850.herokuapp.com/api/submissions?title=' + title + '&url=' + url + '&text=' + text + '&apiKey=5116c7f0e9977a414851')
+      xmlhttp.open('POST', 'https://mysite-ujgs.onrender.com/' + title + '&url=' + url + '&text=' + text + '&apiKey=')
       xmlhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
           window.location.href = '/'
