@@ -1,10 +1,11 @@
 <template>
   <div class="microposts-item">
-    <p class="microposts-item-title">{{ item.title }} <a :href="item.url"
+    <p class="microposts-item-title"><b>{{ item.title }}</b> <a :href="item.url"
                                                          class='microposts-item-details'>{{ item.url }}</a>
     </p>
-    <p class="microposts-item-details">{{ item.likes_count }} points by userId: {{ item.user_id }}
-      <timeago :datetime="item.created_at" :auto-update="60"></timeago></p>
+    <p class="microposts-item-details">{{ item.likes_count }} points by {{ item.creator_name }}
+      <timeago :datetime="item.created_at" :auto-update="60"></timeago>
+    </p>
     <span>
   </span>
   </div>
@@ -25,12 +26,14 @@ export default {
 }
 
 .microposts-item {
+  padding-top: 0.3em;
   font-size: 0.9em
 }
 
 .microposts-item-details {
   font-size: 0.7em;
   color: #828282;
+  margin-top: -0.5em;
 }
 
 </style>

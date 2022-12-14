@@ -39,7 +39,7 @@ export default new Router({
     },
     {
       path: '/submit',
-      name: 'Sumbit',
+      name: 'Submit',
       component: Submit
     },
     {
