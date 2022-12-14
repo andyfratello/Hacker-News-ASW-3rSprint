@@ -5,13 +5,12 @@ import New from '@/views/New'
 import Threads from '@/views/Threads'
 import Ask from '@/views/Ask'
 import Submit from '@/views/Submit'
+import Profile from '@/views/Profile'
 import VueTimeago from 'vue-timeago'
 
 Vue.use(VueTimeago, {
-  name: 'Timeago', // Component name, `Timeago` by default
-  locale: 'en' // Default locale
-  // We use `date-fns` under the hood
-  // So you can use all locales from
+  name: 'Timeago',
+  locale: 'en'
 })
 
 Vue.use(Router)
@@ -24,24 +23,29 @@ export default new Router({
       component: Home
     },
     {
-      path: '/New',
+      path: '/new',
       name: 'New',
       component: New
     },
     {
-      path: '/Threads',
+      path: '/threads',
       name: 'Threads',
       component: Threads
     },
     {
-      path: '/Ask',
+      path: '/ask',
       name: 'Ask',
       component: Ask
     },
     {
-      path: '/Submit',
+      path: '/submit',
       name: 'Sumbit',
       component: Submit
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     }
   ]
 })

@@ -28,7 +28,7 @@
         </div>
 
         <div class="alinear">
-          <router-link class="pure-menu-link" to="/user">login</router-link>
+          <router-link class="pure-menu-link" to="/profile">profile</router-link>
         </div>
 
       </ul>
