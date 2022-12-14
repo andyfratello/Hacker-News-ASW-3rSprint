@@ -7,6 +7,7 @@ import Ask from '@/views/Ask'
 import Submit from '@/views/Submit'
 import Profile from '@/views/Profile'
 import Single from '@/views/Single'
+import UserSubmissions from '@/views/UserSubmissions'
 import VueTimeago from 'vue-timeago'
 
 Vue.use(VueTimeago, {
@@ -52,6 +53,11 @@ export default new Router({
       path: '/micropost/:id',
       name: 'Single',
       component: Single
+    },
+    {
+      path: '/user-submissions/:id',
+      name: 'UserSubmissions',
+      component: UserSubmissions
     }
   ]
 })

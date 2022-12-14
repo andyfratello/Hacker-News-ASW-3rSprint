@@ -16,22 +16,10 @@
           </b>
         </p>
         <p>Api Key: {{ user.api_key }}</p>
-        <tr>
-          <td class="link_stories">
-            <a href="/microposts?user=<%= @user.id %>">
-              <p class="link_stories">submissions</p>
-            </a>
-          </td>
-        </tr>
-        <!--
-        <tr>
-          <td class="link_comments">
-            <a href="/users/<%= @user.id %>/comments">
-              <p class="link_comments">comments</p>
-            </a>
-          </td>
-        </tr>
-        -->
+        <p>
+          <!-- cal canviar id 1 per l'id del user -->
+          <router-link :to="{ path: 'user-submissions/' + '1' } " class="user-links">submissions</router-link>
+        </p>
         <p class="user-links">comments</p>
         <p><span class="user-links">upvoted submissions</span> <span>/</span><span class="user-links-comments">comments</span>
         </p>
@@ -88,6 +76,7 @@ export default {
   margin-bottom: -0.5em;
   text-decoration: underline;
   margin-right: 0.3em;
+  color: #828282;
 }
 
 .user-links-comments {
