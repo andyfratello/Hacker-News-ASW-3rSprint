@@ -11,10 +11,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "date-fns": "^2.29.3",
     "vue": "^2.5.2",
     "vue-composition-api": "^0.0.1",
     "vue-function-api": "^3.0.0-beta.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-timeago": "^5.1.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

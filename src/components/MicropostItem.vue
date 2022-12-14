@@ -4,7 +4,7 @@
                                                          class='microposts-item-details'>{{ item.url }}</a>
     </p>
     <p class="microposts-item-details">{{ item.likes_count }} points by userId: {{ item.user_id }}
-      {{ item.created_at }}</p>
+      <timeago :datetime="item.created_at" :auto-update="60"></timeago></p>
     <span>
   </span>
   </div>
