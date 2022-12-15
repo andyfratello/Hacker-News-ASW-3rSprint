@@ -7,8 +7,8 @@
       <div>
         <h3 class="user-email">{{ user.email }}</h3>
         <p class="user-about"> About:</p>
-        <p><textarea placeholder="Say something about you..." name="text" required
-                     v-model:="user.about"></textarea>
+        <p><textarea v-model="user.about" placeholder="Say something about you..." name="about"
+        ></textarea>
         </p>
         <p>Created:
           <b>
@@ -21,7 +21,8 @@
           <router-link :to="{ path: 'user-submissions/' + '1' } " class="user-links">submissions</router-link>
         </p>
         <p class="user-links">comments</p>
-        <p><span class="user-links">upvoted submissions</span> <span>/</span><span class="user-links-comments">comments</span>
+        <p><span class="user-links">upvoted submissions</span> <span>/</span><span
+          class="user-links-comments">comments</span>
         </p>
         <p>
           <button>
@@ -38,7 +39,7 @@
 <script>
 import {ref, onMounted} from 'vue'
 
-const BASE_URL = 'https://mysite-2ok7.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   setup () {

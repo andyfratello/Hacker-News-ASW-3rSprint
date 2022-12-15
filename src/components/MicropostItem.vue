@@ -4,8 +4,16 @@
       <router-link :to="{ path: 'micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
       <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
     </p>
-    <p class="microposts-item-details">{{ item.likes_count }} points by {{ item.creator_name }}
+    <p class="microposts-item-details">{{ item.likes_count }} points by <span
+      class="micropost-creator">{{ item.creator_name }}</span>
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
+      |
+      <a class="comment-item-url" href="#">comment</a>
+      <span v-if="item.user_id===1">|
+      <a class="comment-item-url" href="#">edit</a>
+      |
+      <a class="comment-item-url" href="#">delete</a>
+        </span>
     </p>
     <span>
   </span>
@@ -17,6 +25,7 @@ export default {
   props: ['item'],
   name: 'MicropostItem'
 }
+
 </script>
 
 <style>
@@ -53,6 +62,13 @@ export default {
 
 .micropost-title {
   font-size: 1.1em;
+  color: rgba(7, 13, 13, 0.95);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.micropost-creator {
+  font-size: 1em;
   color: rgba(7, 13, 13, 0.95);
   text-decoration: none;
   font-weight: 600;
