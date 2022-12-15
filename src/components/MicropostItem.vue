@@ -1,11 +1,12 @@
 <template>
   <div class="microposts-item">
     <p class="microposts-item-title">
-      <router-link :to="{ path: 'micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
+      <router-link :to="{ path: '/micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
       <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
     </p>
-    <p class="microposts-item-details">{{ item.likes_count }} points by <span
-      class="micropost-creator">{{ item.creator_name }}</span>
+    <p class="microposts-item-details">
+      {{ item.likes_count }} points by
+      <router-link :to="{ path: '/users/' + item.user_id }" class="user-email">{{ item.creator_name }}</router-link>
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
       |
       <a class="comment-item-url" href="#">comment</a>
@@ -79,5 +80,17 @@ export default {
   font-weight: bold;
   text-decoration: none;
   color: #828282;
+}
+
+.user-email {
+  font-size: 1em;
+  color: rgba(7, 13, 13, 0.95);
+  text-decoration: none;
+}
+
+.user-email:hover {
+  font-size: 1em;
+  color: rgba(7, 13, 13, 0.95);
+  text-decoration: underline;
 }
 </style>

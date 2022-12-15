@@ -7,6 +7,7 @@ import Ask from '@/views/Ask'
 import Submit from '@/views/Submit'
 import Profile from '@/views/Profile'
 import Single from '@/views/Single'
+import User from '@/views/User'
 import UserSubmissions from '@/views/UserSubmissions'
 import VueTimeago from 'vue-timeago'
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/micropost/:id',
       name: 'Single',
       component: Single
+    },
+    {
+      path: '/users/:id',
+      name: 'User',
+      component: User
     },
     {
       path: '/user-submissions/:id',
