@@ -1,5 +1,5 @@
 <template>
-  <div className="home">
+  <div class="home">
     <div v-if="loading">
       <h3>Loading...</h3>
     </div>
@@ -23,7 +23,8 @@ export default {
     const loading = ref(true)
 
     onMounted(async () => {
-      const response = await fetch(BASE_URL + '/microposts.json?user=' + this.$route.params.id)
+      // const response = await fetch(BASE_URL + '/microposts.json?user=' + this.$route.params.id)
+      const response = await fetch(BASE_URL + '/microposts.json?user=1')
       const json = await response.json()
       console.log(json)
       items.value = json
