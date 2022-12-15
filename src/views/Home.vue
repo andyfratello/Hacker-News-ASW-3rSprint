@@ -13,14 +13,13 @@
 import {ref, onMounted} from 'vue'
 import MicropostItem from '../components/MicropostItem.vue'
 
-const BASE_URL = 'https://mysite-2ok7.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   components: {MicropostItem},
   setup () {
     const items = ref([])
     const loading = ref(true)
-
     onMounted(async () => {
       const response = await fetch(BASE_URL + '/microposts.json')
       const json = await response.json()

@@ -31,7 +31,7 @@ export default {
       var text = document.getElementsByName('text')[0].value
 
       var xmlhttp = new XMLHttpRequest()
-      xmlhttp.open('POST', 'https://mysite-2ok7.onrender.com/' + title + '&url=' + url + '&text=' + text + '&apiKey=')
+      xmlhttp.open('POST', 'https://mysite-mnjc.onrender.com/' + title + '&url=' + url + '&text=' + text + '&apiKey=')
       xmlhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
           window.location.href = '/'

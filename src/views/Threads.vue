@@ -4,32 +4,32 @@
       <h3>Loading...</h3>
     </div>
     <div>
-      <micropost-item v-for="item in items" :key="item.id" :item="item"/>
+      <comment-item v-for="comment in comments" :key="comment.id" :comment="comment"/>
     </div>
   </div>
 </template>
 
 <script>
 import {ref, onMounted} from 'vue'
-import MicropostItem from '../components/MicropostItem.vue'
+import CommentItem from '../components/CommentItem.vue'
 
-const BASE_URL = 'https://mysite-2ok7.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
-  components: {MicropostItem},
+  components: {CommentItem},
   setup () {
-    const items = ref([])
+    const comments = ref([])
     const loading = ref(true)
 
     onMounted(async () => {
-      const response = await fetch(BASE_URL + '/microposts.json?type=ask')
+      const response = await fetch(BASE_URL + '/comments.json?user=1')
       const json = await response.json()
       console.log(json)
-      items.value = json
+      comments.value = json
       loading.value = false
     })
     return {
-      items,
+      comments,
       loading
     }
   }
