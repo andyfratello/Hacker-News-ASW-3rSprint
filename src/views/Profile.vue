@@ -25,11 +25,8 @@
           class="user-links-comments">comments</span>
         </p>
         <p>
-          <button>
-            update
-          </button>
+          <button v-on:click="update">Update</button>
         </p>
-
       </div>
     </div>
 
@@ -38,6 +35,7 @@
 
 <script>
 import {ref, onMounted} from 'vue'
+import axios from 'axios'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -57,8 +55,19 @@ export default {
       user,
       loading
     }
-  }
+  },
+  methods: {
+    update () {
+      let formData = new FormData()
+      formData.append('about', this.about)
+      //  formData.append('_method', 'PUT')
 
+      axios.put(BASE_URL + 'users/' + this.$route.params.id + '.json', formData, {'headers': {'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'}})
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 
