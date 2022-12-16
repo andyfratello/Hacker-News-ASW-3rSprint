@@ -4,13 +4,13 @@
       <h3>Loading...</h3>
     </div>
     <div>
-      <micropost-item v-for="item in items" :key="item.id" :item="item"/>
+      <micropost-item v-for="item in microposts" :key="item.id" :item="item"/>
     </div>
   </div>
 </template>
 
 <script>
-import {ref, onMounted} from 'vue'
+import axios from 'axios'
 import MicropostItem from '../components/MicropostItem.vue'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
@@ -18,22 +18,19 @@ const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 export default {
   name: 'UserSubmissions',
   components: {MicropostItem},
-  setup () {
-    const items = ref([])
-    const loading = ref(true)
-
-    onMounted(async () => {
-      // const response = await fetch(BASE_URL + '/microposts.json?user=' + this.$route.params.id)
-      const response = await fetch(BASE_URL + '/microposts.json?user=1')
-      const json = await response.json()
-      console.log(json)
-      items.value = json
-      loading.value = false
-    })
+  data: function () {
     return {
-      items,
-      loading
+      microposts: []
     }
+  },
+  created: function () {
+    axios.get(BASE_URL + 'microposts.json?user=' + this.$route.params.id)
+      .then((res) => {
+        this.microposts = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>

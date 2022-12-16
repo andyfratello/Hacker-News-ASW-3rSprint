@@ -16,7 +16,7 @@
       </p>
       <p>
         <!-- cal canviar id 1 per l'id del user -->
-        <router-link :to="{ path: '/user-submissions/' + '1' }" class="user-links">submissions</router-link>
+        <router-link :to="{ path: '/user-submissions/' + user.id.toString() }" class="user-links">submissions</router-link>
       </p>
       <p class="user-links">comments</p>
     </div>

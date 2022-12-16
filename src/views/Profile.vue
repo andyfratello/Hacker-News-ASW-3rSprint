@@ -18,7 +18,7 @@
         <p>Api Key: {{ user.api_key }}</p>
         <p>
           <!-- cal canviar id 1 per l'id del user -->
-          <router-link :to="{ path: '/user-submissions/' + '1' } " class="user-links">submissions</router-link>
+          <router-link :to="{ path: '/user-submissions/1' } " class="user-links">submissions</router-link>
         </p>
         <p class="user-links">comments</p>
         <p><span class="user-links">upvoted submissions</span> <span>/</span><span
