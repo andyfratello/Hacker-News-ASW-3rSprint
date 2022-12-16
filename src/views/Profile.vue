@@ -28,11 +28,8 @@
           <router-link :to="{ path: '/upvoted-comments/' + user.id }" class="user-links-comments">comments</router-link>
         </p>
         <p>
-          <button>
-            update
-          </button>
+          <button v-on:click="update">Update</button>
         </p>
-
       </div>
     </div>
 
@@ -41,6 +38,7 @@
 
 <script>
 import {ref, onMounted} from 'vue'
+import axios from 'axios'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -60,8 +58,20 @@ export default {
       user,
       loading
     }
-  }
+  },
+  methods: {
+    update () {
+      let formData = new FormData()
+      formData.append('about', this.user.about)
 
+      //  El this.$route.params.id no funciona
+      axios.put(BASE_URL + 'users/' + this.user.id + '.json', formData, {'headers': {'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'}})
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    }
+  }
 }
 </script>
 

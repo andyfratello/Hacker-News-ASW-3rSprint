@@ -39,6 +39,13 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    axios.put(BASE_URL + 'users/' + this.$route.params.id + '.json')
+      .then((res) => {
+        this.res = res.status
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>
