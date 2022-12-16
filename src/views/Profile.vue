@@ -59,13 +59,14 @@ export default {
   methods: {
     update () {
       let formData = new FormData()
-      formData.append('about', this.about)
-      //  formData.append('_method', 'PUT')
+      formData.append('about', this.user.about)
 
-      axios.put(BASE_URL + 'users/' + this.$route.params.id + '.json', formData, {'headers': {'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'}})
+      //  El this.$route.params.id no funciona
+      axios.put(BASE_URL + 'users/' + this.user.id + '.json', formData, {'headers': {'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'}})
         .catch((err) => {
           console.log(err)
         })
+      window.location.reload()
     }
   }
 }
