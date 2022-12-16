@@ -5,7 +5,7 @@
     </div>
     <div>
       <div>
-        <h3 class="user-email">{{ user.email }}</h3>
+        <h3 class="user-email-profile">{{ user.email }}</h3>
         <p class="user-about"> About:</p>
         <p><textarea v-model="user.about" placeholder="Say something about you..." name="about"
         ></textarea>
@@ -68,8 +68,14 @@ export default {
   margin-left: 0.3em;
 }
 
-.user-email {
+.user-email-profile {
   margin-top: 2em;
+  text-decoration: none;
+}
+
+.user-email-profile:hover {
+  margin-top: 2em;
+  text-decoration: none;
 }
 
 .user-links {

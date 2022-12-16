@@ -1,15 +1,21 @@
 <template>
   <div>
     <div class="comment-item">
-      <p class="comment-item-details">{{ comment.likes_count }} points by <span
-        class="comment-creator">{{ comment.creator_name }}</span>
+      <p class="comment-item-details">
+        {{ comment.likes_count }} points by
+        <span v-if="comment.user_id!==1">
+          <router-link :to="{ path: '/users/' + comment.user_id }" class="user-email">{{ comment.creator_name }}</router-link>
+        </span>
+        <span v-else>
+          <router-link to="/profile" class="user-email">{{ comment.creator_name }}</router-link>
+        </span>
         <timeago :datetime="comment.created_at" :auto-update="60"></timeago>
         |
         <a class="comment-item-url" href="#">parent</a>
         <span v-if="comment.user_id===1">|
-        <a class="comment-item-url" href="#">edit</a>
-        |
-        <a class="comment-item-url" href="#">delete</a>
+          <a class="comment-item-url" href="#">edit</a>
+          |
+          <a class="comment-item-url" href="#">delete</a>
         </span>
       </p>
 
@@ -55,7 +61,7 @@ export default {
 }
 
 .comment-item-url:hover {
-  font-size: 0.7em;
+  font-size: 1em;
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;

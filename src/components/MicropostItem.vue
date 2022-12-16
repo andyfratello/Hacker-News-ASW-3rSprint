@@ -6,15 +6,20 @@
     </p>
     <p class="microposts-item-details">
       {{ item.likes_count }} points by
-      <router-link :to="{ path: '/users/' + item.user_id }" class="user-email">{{ item.creator_name }}</router-link>
+      <span v-if="item.user_id!==1">
+        <router-link :to="{ path: '/users/' + item.user_id }" class="user-email">{{ item.creator_name }}</router-link>
+      </span>
+      <span v-else>
+        <router-link to="/profile" class="user-email">{{ item.creator_name }}</router-link>
+      </span>
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
       |
       <a class="comment-item-url" href="#">comment</a>
       <span v-if="item.user_id===1">|
-      <a class="comment-item-url" href="#">edit</a>
-      |
-      <a class="comment-item-url" href="#">delete</a>
-        </span>
+        <a class="comment-item-url" href="#">edit</a>
+        |
+        <a class="comment-item-url" href="#">delete</a>
+      </span>
     </p>
     <span>
   </span>
@@ -91,6 +96,20 @@ export default {
 .user-email:hover {
   font-size: 1em;
   color: rgba(7, 13, 13, 0.95);
+  text-decoration: underline;
+}
+
+.comment-item-url {
+  font-size: 1em;
+  color: #828282;
+  margin-top: 0.5em;
+  text-decoration: none;
+}
+
+.comment-item-url:hover {
+  font-size: 1em;
+  color: #828282;
+  margin-top: -0.5em;
   text-decoration: underline;
 }
 </style>
