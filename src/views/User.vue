@@ -2,8 +2,7 @@
   <div class="container">
     <div>
       <h3 class="user-email-profile">{{ user.email }}</h3>
-      <br>
-      <p class="user-about">About: <b>{{ user.about }}</b></p>
+      <p class="user-about-us">About: <b>{{ user.about }}</b></p>
       <br>
       <p>Created:
         <b>
@@ -44,9 +43,8 @@ export default {
 </script>
 
 <style>
-.user-about {
+.user-about-us {
   margin-bottom: -1em;
-
 }
 
 .user-email-profile {
