@@ -11,42 +11,55 @@
       {{ micropost.text }}
     </p>
     <textarea placeholder="write a comment..." name="text"></textarea>
+    <br>
+    <div>
+      <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
+    </div>
   </div>
 </template>
 
 <script>
+import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   name: 'Single',
-  data: function () {
+  components: {CommentItem},
+  data () {
     return {
-      micropost: {},
-      comments: []
+      comments: null,
+      micropost: null
     }
   },
-  created: function () {
-    axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
-      .then((res) => {
-        this.micropost = res.data
-        this.micropost.comments = []
-        this.micropost.kids.forEach(id => {
-          axios.get(BASE_URL + 'comments/' + id + '.json')
-            .then(res => {
-              this.comments.push(res.data)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+  async mounted () {
+    await axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
+      .then(response => (this.micropost = response.data))
+    /* const response2 = await fetch(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+     const json = await response2.json()
+     console.log(json)
+     this.comments = json */
+
+    await axios.get(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+      .then(response => (this.comments = response.data)
+      )
+  },
+  methods: {
+    onlyParents (arr) {
+      if (arr && arr.length) {
+        for (let i = 0; i < arr.length; ++i) {
+          if (arr[i].parent_id != null) {
+            arr.splice(i, 1)
+          }
+        }
+        return arr
+      }
+    }
   }
+
 }
+
 </script>
 
 <style scoped>
