@@ -1,14 +1,10 @@
 <template>
   <div class="container">
-    <div v-if="loading">
-      <h3>Loading...</h3>
-    </div>
     <div>
       <h3 class="user-email-profile">{{ user.email }}</h3>
-      <p class="user-about">About:</p>
-      <p><textarea placeholder="Say something about you..." name="text" required
-                   v-model:="user.about"></textarea>
-      </p>
+      <br>
+      <p class="user-about">About: <b>{{ user.about }}</b></p>
+      <br>
       <p>Created:
         <b>
           <timeago :datetime="user.created_at" :auto-update="60"></timeago>
@@ -16,7 +12,7 @@
       </p>
       <p>
         <!-- cal canviar id 1 per l'id del user -->
-        <router-link :to="{ path: '/user-submissions/' + user.id.toString() }" class="user-links">submissions</router-link>
+        <router-link :to="{ path: '/user-submissions/' + user.id }" class="user-links">submissions</router-link>
       </p>
       <p class="user-links">comments</p>
     </div>
@@ -26,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 export default {
   name: 'User',
@@ -49,7 +46,7 @@ export default {
 <style>
 .user-about {
   margin-bottom: -1em;
-  margin-left: 0.3em;
+
 }
 
 .user-email-profile {
@@ -69,6 +66,7 @@ export default {
   margin-right: 0.3em;
   color: #828282;
 }
+
 .user-links-comments {
   margin-left: 0.5em;
   text-decoration: underline;

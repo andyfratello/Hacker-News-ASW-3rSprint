@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <div v-if="loading">
-      <h3>Loading...</h3>
-    </div>
     <div>
       <micropost-item v-for="item in microposts" :key="item.id" :item="item"/>
     </div>
@@ -32,6 +29,7 @@ export default {
         console.log(err)
       })
   }
+
 }
 </script>
 
