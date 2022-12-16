@@ -5,9 +5,7 @@
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_microposts === true" class="unable_unvote">
-        *
-        </span>
+        <span v-if="this.voted_microposts === true" class="unable_unvote">*</span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -17,9 +15,10 @@
     </p>
     <p class="microposts-item-details">{{ item.likes_count }} points by {{ item.creator_name }}
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
+      <a v-if="this.voted_microposts === true">
+         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
+      </a>
     </p>
-    <span>
-  </span>
   </div>
 </template>
 
@@ -45,8 +44,14 @@ export default {
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
     const json = await response.json()
-    if ((json[0]['id']) === this.item.id) {
-      this.voted_microposts = true
+    console.log(json)
+    if (json != null) {
+      for (let i = 0; i < json.length; ++i) {
+        if ((json[i]['id']) === this.item.id) {
+          console.log()
+          this.voted_microposts = true
+        }
+      }
     }
   },
   methods: {
@@ -60,8 +65,21 @@ export default {
         }
       }
       console.log(this.item.id)
-      await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      console.log(response.json())
       this.voted_microposts = true
+    },
+    async unvote () {
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        }
+      }
+      await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      this.voted_microposts = false
     }
   }
 }
@@ -131,5 +149,18 @@ export default {
   cursor: pointer;
   line-height: 0;
   padding-left: -3px;
+}
+
+.downvoted_button_c {
+  font-size: 7pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-family: Verdana, Geneva, sans-serif;
+  text-decoration: underline;
 }
 </style>
