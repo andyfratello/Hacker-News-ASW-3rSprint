@@ -17,12 +17,15 @@
         </p>
         <p>Api Key: {{ user.api_key }}</p>
         <p>
-          <!-- cal canviar id 1 per l'id del user -->
-          <router-link :to="{ path: '/user-submissions/' + user.id } " class="user-links">submissions</router-link>
+          <router-link :to="{ path: '/user-submissions/' + user.id }" class="user-links">submissions</router-link>
         </p>
-        <p class="user-links">comments</p>
-        <p><span class="user-links">upvoted submissions</span> <span>/</span><span
-          class="user-links-comments">comments</span>
+        <p>
+          <router-link to="/threads" class="user-links">comments</router-link>
+        </p>
+        <p>
+          <router-link :to="{ path: '/upvoted-submissions/' + user.id }" class="user-links">upvoted submissions</router-link>
+          <span>/</span>
+          <router-link :to="{ path: '/upvoted-comments/' + user.id }" class="user-links-comments">comments</router-link>
         </p>
         <p>
           <button v-on:click="update">Update</button>
@@ -97,7 +100,8 @@ export default {
 }
 
 .user-links-comments {
-  margin-left: 0.5em;
+  margin-left: 0.4em;
   text-decoration: underline;
+  color: #828282;
 }
 </style>

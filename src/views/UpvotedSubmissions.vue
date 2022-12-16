@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      <micropost-item v-for="item in microposts" :key="item.id" :item="item"/>
+      <micropost-item v-for="micropost in microposts" :key="micropost.id" :item="micropost"/>
     </div>
   </div>
 </template>
@@ -13,15 +13,17 @@ import MicropostItem from '../components/MicropostItem.vue'
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
-  name: 'UserSubmissions',
+  name: 'UpvotedSubmissions',
   components: {MicropostItem},
   data: function () {
     return {
-      microposts: []
+      microposts: [],
+      AuthStr: 'KEgviRuGemHSgbsYzEASWdVy'
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'microposts.json?user=' + this.$route.params.id)
+    axios.get(BASE_URL + 'users/upvoted_submissions/' + this.$route.params.id + '.json', {
+      'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
         this.microposts = res.data
       })
