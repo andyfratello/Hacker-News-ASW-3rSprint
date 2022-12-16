@@ -13,7 +13,7 @@
 import {ref, onMounted} from 'vue'
 import MicropostItem from '../components/MicropostItem.vue'
 
-const BASE_URL = 'https://mysite-2ok7.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com'
 
 export default {
   components: {MicropostItem},
@@ -42,5 +42,4 @@ export default {
   background-color: #f6f6ef;
   padding-left: 2em
 }
-
 </style>

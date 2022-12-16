@@ -1,6 +1,17 @@
 <template>
   <div class="microposts-item">
     <p class="microposts-item-title">
+      <span v-if="item.user_id === 1">
+        <span class="unable_unvote">*</span>
+      </span>
+      <span v-else>
+        <span v-if="this.voted_microposts === true" class="unable_unvote">
+        *
+        </span>
+        <span v-else>
+          <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
+        </span>
+      </span>
       <router-link :to="{ path: 'micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
       <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
     </p>
@@ -13,9 +24,46 @@
 </template>
 
 <script>
+
+const BASE_URL = 'https://mysite-mnjc.onrender.com'
 export default {
   props: ['item'],
-  name: 'MicropostItem'
+  name: 'MicropostItem',
+  data () {
+    return {
+      voted_microposts: false
+    }
+  },
+  async beforeCreate () {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+      }
+    }
+    const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
+    const json = await response.json()
+    if ((json[0]['id']) === this.item.id) {
+      this.voted_microposts = true
+    }
+  },
+  methods: {
+    async voteLike () {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        }
+      }
+      console.log(this.item.id)
+      await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      this.voted_microposts = true
+    }
+  }
 }
 </script>
 
@@ -63,5 +111,25 @@ export default {
   font-weight: bold;
   text-decoration: none;
   color: #828282;
+}
+
+.unable_unvote {
+  color: orangered;
+  padding-left: 8px;
+  padding-right: 3px;
+}
+
+.upvoted_button_c {
+  font-size: 8pt;
+  color: #9a9a9a;
+  outline: none;
+  border: none;
+  background: none;
+  width: 20px;
+  height: 20px;
+  text-align: left;
+  cursor: pointer;
+  line-height: 0;
+  padding-left: -3px;
 }
 </style>
