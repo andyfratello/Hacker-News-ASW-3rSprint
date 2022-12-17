@@ -67,6 +67,7 @@ export default {
   font-size: 0.7em;
   color: #828282;
   margin-top: -0.5em;
+  cursor: pointer;
 }
 
 .microposts-item-url {
@@ -81,6 +82,7 @@ export default {
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .micropost-title {
