@@ -18,7 +18,7 @@
       <span v-if="item.user_id===1">|
         <a class="comment-item-url" href="#">edit</a>
         |
-        <a class="comment-item-url" href="#">delete</a>
+        <a class="comment-item-url" v-on:click="deleteMicropost">delete</a>
       </span>
     </p>
     <span>
@@ -27,9 +27,26 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 export default {
   props: ['item'],
-  name: 'MicropostItem'
+  name: 'MicropostItem',
+  methods: {
+    deleteMicropost: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        }
+      )
+      window.location.reload()
+    }
+  }
 }
 
 </script>
@@ -68,13 +85,6 @@ export default {
 
 .micropost-title {
   font-size: 1.1em;
-  color: rgba(7, 13, 13, 0.95);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.micropost-creator {
-  font-size: 1em;
   color: rgba(7, 13, 13, 0.95);
   text-decoration: none;
   font-weight: 600;
