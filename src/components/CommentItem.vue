@@ -15,7 +15,7 @@
         |
         <router-link :to="{ path: '/micropost/' + comment.micropost_id }" class="comment-item-url">parent</router-link>
         <span v-if="comment.user_id===1">|
-          <a class="comment-item-url" href="#">edit</a>
+          <router-link :to="{ path: '/comments/' + comment.id }" class="comment-item-url">edit</router-link>
           |
           <a class="comment-item-url" v-on:click="deleteComment">delete</a>
         </span>
