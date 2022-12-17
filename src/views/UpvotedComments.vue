@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      <comment-item v-for="comment in comments" :key="comment.id" :comment="comment"/>
+      <comment-item v-for="item in comments" :key="item.id" :comment="item"/>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
   components: {CommentItem},
   data: function () {
     return {
+      commentLikes: [],
       comments: [],
       AuthStr: 'KEgviRuGemHSgbsYzEASWdVy'
     }
@@ -25,7 +26,18 @@ export default {
     axios.get(BASE_URL + 'users/upvoted_comments/' + this.$route.params.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
-        this.comments = res.data
+        console.log(res.data)
+        this.commentLikes = res.data
+        for (let i = 0; i < this.commentLikes.length; i++) {
+          console.log(i)
+          axios.get(BASE_URL + 'comments/' + this.commentLikes[i].comment_id + '.json')
+            .then((res) => {
+              this.comments.push(res.data)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
       })
       .catch((err) => {
         console.log(err)
