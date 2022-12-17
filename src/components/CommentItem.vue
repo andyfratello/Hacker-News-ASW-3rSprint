@@ -25,7 +25,8 @@
       <p><a class="comment-item-url" href="#">reply</a></p>
     </div>
     <div>
-      <comment-item v-for="comment in onlyChilds(comments)" :key="comment.id" :comment="comment" class="comment-comment"/>
+      <comment-item v-for="comment in onlyChilds(comments)" :key="comment.id" :comment="comment"
+                    class="comment-comment"/>
     </div>
   </div>
 
@@ -46,14 +47,7 @@ export default {
     }
   },
   async mounted () {
-    await axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
-      .then(response => (this.micropost = response.data))
-    /* const response2 = await fetch(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
-     const json = await response2.json()
-     console.log(json)
-     this.comments = json */
-
-    await axios.get(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+    await axios.get(`${BASE_URL}/comments.json`)
       .then(response => (this.comments = response.data)
       )
   },
@@ -84,13 +78,6 @@ export default {
   font-size: 0.9em;
   color: black;
 
-}
-
-.comment-creator {
-  font-size: 1em;
-  color: rgba(7, 13, 13, 0.95);
-  text-decoration: none;
-  font-weight: 600;
 }
 
 .comment-item-details {
