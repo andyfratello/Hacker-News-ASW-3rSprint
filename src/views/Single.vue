@@ -17,7 +17,10 @@
     <p class="micropost-text">
       {{ micropost.text }}
     </p>
-    <textarea placeholder="write a comment..." name="text"></textarea>
+    <textarea v-model="text" placeholder="write a comment..."></textarea>
+    <p>
+      <button v-on:click="addComment">add comment</button>
+    </p>
   </div>
 </template>
 
@@ -52,6 +55,25 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+  },
+  methods: {
+    addComment () {
+      axios.post(BASE_URL + 'comments.json',
+        {
+          'micropost_id': this.$route.params.id,
+          'text': this.text,
+          'parent_id': null
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    }
   }
 }
 </script>
