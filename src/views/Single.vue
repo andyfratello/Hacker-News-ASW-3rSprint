@@ -4,7 +4,14 @@
       <span class="micropost-title">{{ micropost.title }}</span>
       <a :href="micropost.url" class='microposts-item-url'>{{ micropost.url }}</a>
     </p>
-    <p class="microposts-item-details">{{ micropost.likes_count }} points by {{ micropost.creator_name }}
+    <p class="microposts-item-details">
+      {{ micropost.likes_count }} points by
+      <span v-if="micropost.user_id!==1">
+        <router-link :to="{ path: '/users/' + micropost.user_id }" class="user-email">{{ micropost.creator_name }}</router-link>
+      </span>
+      <span v-else>
+        <router-link to="/profile" class="user-email">{{ micropost.creator_name }}</router-link>
+      </span>
       <timeago :datetime="micropost.created_at" :auto-update="60"></timeago>
     </p>
     <p class="micropost-text">
