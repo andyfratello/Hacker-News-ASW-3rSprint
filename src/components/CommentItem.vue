@@ -17,12 +17,14 @@
         <span v-if="comment.user_id===1">|
           <a class="comment-item-url" href="#">edit</a>
           |
-          <a class="comment-item-url" href="#">delete</a>
+          <a class="comment-item-url" v-on:click="deleteComment">delete</a>
         </span>
       </p>
 
       <p class="comment-text">{{ comment.text }}</p>
-      <p><router-link :to="{ path: '/comments/' + comment.id }" class="reply-link">{{ "reply" }}</router-link></p>
+      <p>
+        <router-link :to="{ path: '/comments/' + comment.id }" class="reply-link">{{ 'reply' }}</router-link>
+      </p>
     </div>
     <div>
       <comment-item v-for="comment in onlyChilds(comments)" :key="comment.id" :comment="comment"
@@ -61,6 +63,18 @@ export default {
         }
         return arr
       }
+    },
+    deleteComment: async function () {
+      console.log(this.comment.id)
+      console.log(BASE_URL + 'microposts' + this.comment.id + '.json')
+      await axios.delete(BASE_URL + 'comments/' + this.comment.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        }
+      )
+      window.location.reload()
     }
   }
 }
