@@ -98,6 +98,7 @@ export default {
   font-size: 0.7em;
   color: #828282;
   margin-top: 0.5em;
+  cursor: pointer;
 }
 
 .comment-item-url:hover {
