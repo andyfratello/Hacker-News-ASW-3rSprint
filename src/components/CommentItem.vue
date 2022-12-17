@@ -22,7 +22,7 @@
       </p>
 
       <p class="comment-text">{{ comment.text }}</p>
-      <p><a class="comment-item-url" href="#">reply</a></p>
+      <p><router-link :to="{ path: '/comments/' + comment.id }" class="reply-link">{{ "reply" }}</router-link></p>
     </div>
     <div>
       <comment-item v-for="comment in onlyChilds(comments)" :key="comment.id" :comment="comment"
