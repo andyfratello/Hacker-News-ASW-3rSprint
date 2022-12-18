@@ -155,15 +155,23 @@ export default {
 }
 
 .downvoted_button_c {
-  font-size: 7pt;
   color: #828282;
-  outline: none;
-  border: none;
-  background: none;
-  width: 40px;
-  text-align: left;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
   cursor: pointer;
-  font-family: Verdana, Geneva, sans-serif;
+  font-weight: normal;
+}
+
+.downvoted_button_c:hover {
+  color: #828282;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  font-weight: normal;
   text-decoration: underline;
 }
 
