@@ -72,7 +72,7 @@ button {
   border-radius: 5px;
   background-color: darkorange;
   color:white;
-  min-height: 36px;
+  /* min-height: 36px; */
   font-weight: 600;
   border:none;
   margin-top: 2em;

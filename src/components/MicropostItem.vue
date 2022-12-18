@@ -5,7 +5,7 @@
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_microposts === true" class="unable_unvote">*</span>
+        <span v-if="this.voted_microposts === true" class="already_voted"></span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -22,11 +22,11 @@
         <router-link to="/profile" class="user-email">{{ item.creator_name }}</router-link>
       </span>
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
-      <a v-if="this.voted_microposts === true">
-         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
-      </a>
       |
       <a class="comment-item-url" href="#">comment</a>
+      <a v-if="this.voted_microposts === true">
+        | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
+      </a>
       <span v-if="item.user_id===1">|
         <a class="comment-item-url" href="#">edit</a>
         |
@@ -155,35 +155,41 @@ export default {
 }
 
 .unable_unvote {
+  font-size: 1.1em;
   color: orangered;
-  padding-left: 8px;
-  padding-right: 3px;
+  padding-left: 5px;
+  padding-right: 2px;
 }
 
 .upvoted_button_c {
   font-size: 8pt;
   color: #9a9a9a;
-  outline: none;
-  border: none;
-  background: none;
-  width: 20px;
-  height: 20px;
-  text-align: left;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
   cursor: pointer;
-  line-height: 0;
-  padding-left: -3px;
+  font-weight: normal;
 }
 
 .downvoted_button_c {
-  font-size: 7pt;
   color: #828282;
-  outline: none;
-  border: none;
-  background: none;
-  width: 40px;
-  text-align: left;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
   cursor: pointer;
-  font-family: Verdana, Geneva, sans-serif;
+  font-weight: normal;
+}
+
+.downvoted_button_c:hover {
+  color: #828282;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  font-weight: normal;
   text-decoration: underline;
 }
 
@@ -211,5 +217,17 @@ export default {
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;
+}
+
+.already_voted {
+  font-size: 7pt;
+  color: #F6F6EF;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  font-family: Verdana, Geneva, sans-serif;
+  padding-left: 14px;
 }
 </style>
