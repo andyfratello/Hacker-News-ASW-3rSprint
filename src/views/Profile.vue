@@ -5,10 +5,10 @@
     </div>
     <div>
       <div>
-        <h3 class="user-email">{{ user.email }}</h3>
+        <h3 class="user-email-profile">{{ user.email }}</h3>
         <p class="user-about"> About:</p>
-        <p><textarea placeholder="Say something about you..." name="text" required
-                     v-model:="user.about"></textarea>
+        <p><textarea v-model="user.about" placeholder="Say something about you..." name="about"
+        ></textarea>
         </p>
         <p>Created:
           <b>
@@ -17,18 +17,19 @@
         </p>
         <p>Api Key: {{ user.api_key }}</p>
         <p>
-          <!-- cal canviar id 1 per l'id del user -->
-          <router-link :to="{ path: 'user-submissions/' + '1' } " class="user-links">submissions</router-link>
-        </p>
-        <p class="user-links">comments</p>
-        <p><span class="user-links">upvoted submissions</span> <span>/</span><span class="user-links-comments">comments</span>
+          <router-link :to="{ path: '/user-submissions/' + user.id }" class="user-links">submissions</router-link>
         </p>
         <p>
-          <button>
-            update
-          </button>
+          <router-link to="/threads" class="user-links">comments</router-link>
         </p>
-
+        <p>
+          <router-link :to="{ path: '/upvoted-submissions/' + user.id }" class="user-links">upvoted submissions</router-link>
+          <span>/</span>
+          <router-link :to="{ path: '/upvoted-comments/' + user.id }" class="user-links-comments">comments</router-link>
+        </p>
+        <p>
+          <button v-on:click="update">Update</button>
+        </p>
       </div>
     </div>
 
@@ -37,8 +38,9 @@
 
 <script>
 import {ref, onMounted} from 'vue'
+import axios from 'axios'
 
-const BASE_URL = 'https://mysite-mnjc.onrender.com'
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   setup () {
@@ -56,8 +58,20 @@ export default {
       user,
       loading
     }
-  }
+  },
+  methods: {
+    update () {
+      let formData = new FormData()
+      formData.append('about', this.user.about)
 
+      //  El this.$route.params.id no funciona
+      axios.put(BASE_URL + 'users/' + this.user.id + '.json', formData, {'headers': {'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'}})
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    }
+  }
 }
 </script>
 
@@ -67,8 +81,14 @@ export default {
   margin-left: 0.3em;
 }
 
-.user-email {
+.user-email-profile {
   margin-top: 2em;
+  text-decoration: none;
+}
+
+.user-email-profile:hover {
+  margin-top: 2em;
+  text-decoration: none;
 }
 
 .user-links {
@@ -80,7 +100,8 @@ export default {
 }
 
 .user-links-comments {
-  margin-left: 0.5em;
+  margin-left: 0.4em;
   text-decoration: underline;
+  color: #828282;
 }
 </style>

@@ -1,50 +1,56 @@
 <template>
   <div class="container">
     <h2>Submit</h2>
-    <input type="text" placeholder="title" name="title" required> <br> <br>
-    <input type="text" placeholder="url" name="url"> <br> <br>
-    <textarea placeholder="text" name="text" required></textarea> <br> <br>
-    <input type="text" placeholder="apiKey" name="apikey" required> <br> <br>
+    <input type="text" placeholder="title" name="title" v-model="posts.title" required> <br> <br>
+    <input type="text" placeholder="url" name="url" v-model="posts.url"> <br> <br>
+    <textarea placeholder="text" name="text" v-model="posts.text" required></textarea> <br> <br>
     <button type="submit" v-on:click= "postData">Submit</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   name: 'Submit',
   data () {
     return {
       posts: {
-        title: null,
-        url: null,
-        text: null,
-        apikey: null
-
+        title: '',
+        url: '',
+        text: ''
       }
     }
   },
   methods: {
-    postData: function () {
-      var title = document.getElementsByName('title')[0].value
-      var url = document.getElementsByName('url')[0].value
-      var text = document.getElementsByName('text')[0].value
-
-      var xmlhttp = new XMLHttpRequest()
-      xmlhttp.open('POST', 'https://mysite-mnjc.onrender.com/' + title + '&url=' + url + '&text=' + text + '&apiKey=')
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-          window.location.href = '/'
-        }
-      }
-      xmlhttp.setRequestHeader('Content-type', 'application/json')
-      xmlhttp.setRequestHeader('Accept', 'application/json')
-      xmlhttp.send()
+    async postData () {
+      await axios.post(BASE_URL + 'microposts.json', this.posts,
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .then((res) => {
+          console.log(res)
+          if (res.data.url === this.posts.url && res.data.title !== this.posts.title) {
+            this.$router.push('/micropost/' + res.data.id)
+          } else {
+            this.$router.push('/')
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-  },
-  created: function () {
-
   }
-
 }
 </script>
+
+<style>
+.submit-button {
+  color: white;
+  text-decoration: none;
+}
+</style>
