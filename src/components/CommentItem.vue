@@ -47,7 +47,7 @@
 <script>
 import axios from 'axios'
 
-const BASE_URL = 'https://mysite-mnjc.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com'
 
 export default {
   props: ['comment'],
@@ -78,7 +78,7 @@ export default {
     console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
-        if ((json[i]['id']) === this.comment.id) {
+        if ((json[i]['comment_id']) === this.comment.id) {
           console.log()
           this.voted_comment = true
         }
@@ -99,7 +99,7 @@ export default {
     deleteComment: async function () {
       console.log(this.comment.id)
       console.log(BASE_URL + 'microposts' + this.comment.id + '.json')
-      await axios.delete(BASE_URL + 'comments/' + this.comment.id + '.json',
+      await axios.delete(BASE_URL + '/comments/' + this.comment.id + '.json',
         {
           'headers': {
             'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
@@ -118,7 +118,7 @@ export default {
         }
       }
       console.log(this.comment.id)
-      const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id + '/likes.json', requestOptions)
+      const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
       console.log(response.json())
       this.voted_comment = true
     },
@@ -131,7 +131,7 @@ export default {
           'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
         }
       }
-      await fetch(BASE_URL + '/comment_likes/' + this.comment.id + '/likes.json', requestOptions)
+      await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
       this.voted_comment = false
     }
   }
