@@ -5,7 +5,7 @@
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_microposts === true" class="already_voted"></span>
+        <span v-if="this.voted_microposts === true" class="unable_unvote">*</span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -140,13 +140,6 @@ export default {
   font-weight: 600;
 }
 
-.micropost-creator {
-  font-size: 1em;
-  color: rgba(7, 13, 13, 0.95);
-  text-decoration: none;
-  font-weight: 600;
-}
-
 .micropost-title:visited {
   font-size: 1.1em;
   font-weight: bold;
@@ -217,17 +210,5 @@ export default {
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;
-}
-
-.already_voted {
-  font-size: 7pt;
-  color: #F6F6EF;
-  outline: none;
-  border: none;
-  background: none;
-  width: 40px;
-  text-align: left;
-  font-family: Verdana, Geneva, sans-serif;
-  padding-left: 14px;
 }
 </style>
