@@ -5,7 +5,7 @@
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_microposts === true" class="unable_unvote">*</span>
+        <span v-if="this.voted_microposts === true" class="already_voted"></span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -210,5 +210,11 @@ export default {
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;
+}
+
+.already_voted {
+  font-size: 1.1em;
+  padding-left: 12px;
+  padding-right: 2px;
 }
 </style>
