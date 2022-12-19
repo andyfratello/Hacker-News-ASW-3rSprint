@@ -2,7 +2,7 @@
   <div class="microposts-item">
     <p class="microposts-item-title">
       <router-link :to="{ path: '/micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
-      <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
+      <a :href="item.url" class='microposts-item-url'>{{ item.url | host }}</a>
     </p>
     <p class="microposts-item-details">
       {{ item.likes_count }} points by
