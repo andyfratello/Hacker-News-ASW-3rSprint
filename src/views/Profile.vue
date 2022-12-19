@@ -28,7 +28,7 @@
           <router-link :to="{ path: '/upvoted-comments/' + user.id }" class="user-links-comments">comments</router-link>
         </p>
         <p>
-          <button v-on:click="update">Update</button>
+          <button v-on:click="update" class="button-update">Update</button>
         </p>
       </div>
     </div>
@@ -103,5 +103,9 @@ export default {
   margin-left: 0.4em;
   text-decoration: underline;
   color: #828282;
+}
+
+.button-update {
+  height: 36px;
 }
 </style>
