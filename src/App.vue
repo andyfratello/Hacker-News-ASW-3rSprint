@@ -7,11 +7,13 @@
 
 <script>
 import Navbar from './components/Navbar'
+import MicropostItem from './components/MicropostItem.vue'
 
 export default {
   name: 'App',
   components: {
-    navbar: Navbar
+    navbar: Navbar,
+    micropost: MicropostItem
   }
 }
 </script>
