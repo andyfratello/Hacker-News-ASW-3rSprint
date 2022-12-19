@@ -10,8 +10,8 @@
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
       </span>
-      <router-link :to="{ path: 'micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
-      <a :href="item.url" class='microposts-item-url'>{{ item.url }}</a>
+      <router-link :to="{ path: '/micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
+      <a :href="item.url" class='microposts-item-url'>{{ item.url | host }}</a>
     </p>
     <p class="microposts-item-details">
       {{ item.likes_count }} points by
