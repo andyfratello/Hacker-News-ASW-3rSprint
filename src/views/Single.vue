@@ -85,11 +85,6 @@ export default {
   color: #828282;
 }
 
-.microposts-item {
-  padding-top: 0.3em;
-  font-size: 0.9em
-}
-
 .microposts-item-details {
   font-size: 0.7em;
   color: #828282;

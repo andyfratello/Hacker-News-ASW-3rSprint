@@ -17,6 +17,18 @@
     <p class="micropost-text">
       {{ micropost.text }}
     </p>
+    <p class="container">
+        <label>title:</label>
+        <input id="title" v-bind:placeholder="micropost.title">
+    </p>
+    <p class="container" v-if="micropost.url !== ''">
+      <label>url: {{micropost.url}}</label>
+    </p>
+    <p class="container" v-else>
+      <label>text:</label>
+      <input id="text" v-bind:placeholder="micropost.text">
+    </p>
+    <button type="submit" v-on:click= "edit">Update</button>
   </div>
 </template>
 
@@ -32,7 +44,8 @@ export default {
   name: 'EditMicropost',
   data: function () {
     return {
-      micropost: {}
+      micropost: {},
+      data: {}
     }
   },
   created: function () {
@@ -46,19 +59,35 @@ export default {
   },
   methods: {
     async edit () {
-      axios.put(BASE_URL + 'microposts/' + this.micropost.id + '.json',
-        {
-          'text': this.text
-        },
+      console.log(document.getElementById('title').value)
+      console.log(document.getElementById('text').value)
+      if (document.getElementById('title').value !== '' && document.getElementById('text').value !== '') {
+        this.data = {
+          'title': document.getElementById('title').value,
+          'text': document.getElementById('text').value
+        }
+      } else if (document.getElementById('text').value !== '') {
+        this.data = {
+          'text': document.getElementById('text').value
+        }
+      } else if (document.getElementById('title').value !== '') {
+        this.data = {
+          'title': document.getElementById('title').value
+        }
+      }
+      axios.put(BASE_URL + 'microposts/' + this.$route.params.id + '.json',
+        this.data,
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'accept': 'application/json',
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy',
+            'Content-Type': 'application/json'
           }
         })
         .catch((err) => {
           console.log(err)
         })
-      window.history.back()
+      await this.$router.push({name: 'Home'})
     }
   }
 }
