@@ -84,6 +84,7 @@ export default {
       const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       console.log(response.json())
       this.voted_microposts = true
+      window.location.reload()
     },
     async unvote () {
       const requestOptions = {
@@ -96,6 +97,7 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       this.voted_microposts = false
+      window.location.reload()
     }
   }
 }
