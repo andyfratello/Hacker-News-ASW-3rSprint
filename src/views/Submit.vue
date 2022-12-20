@@ -4,7 +4,7 @@
     <input type="text" placeholder="title" name="title" v-model="posts.title" required> <br> <br>
     <input type="text" placeholder="url" name="url" v-model="posts.url"> <br> <br>
     <textarea placeholder="text" name="text" v-model="posts.text" required></textarea> <br> <br>
-    <button type="submit" v-on:click= "postData">Submit</button>
+    <button type="submit" v-on:click= "postData" class="button-submit">Submit</button>
   </div>
 </template>
 
@@ -49,8 +49,7 @@ export default {
 </script>
 
 <style>
-.submit-button {
-  color: white;
-  text-decoration: none;
+.button-submit {
+  min-height: 36px;
 }
 </style>
