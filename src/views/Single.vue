@@ -100,12 +100,8 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  },
-  methods: {
+      window.location.reload()
+    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',
@@ -131,23 +127,6 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       this.voted = false
-    },
-    addComment () {
-      axios.post(BASE_URL + 'comments.json',
-        {
-          'micropost_id': this.$route.params.id,
-          'text': this.text,
-          'parent_id': null
-        },
-        {
-          'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      window.location.reload()
     }
   },
   async beforeCreate () {
@@ -169,8 +148,6 @@ export default {
           this.voted = true
         }
       }
-    }
-      window.location.reload()
     }
   }
 }
