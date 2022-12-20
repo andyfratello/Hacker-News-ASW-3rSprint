@@ -10,8 +10,10 @@
     <p class="micropost-text">
       {{ micropost.text }}
     </p>
-    <textarea placeholder="write a comment..." name="text"></textarea>
-    <br>
+    <textarea v-model="text" id="comment" placeholder="write a comment..."></textarea>
+    <p>
+      <button v-on:click="addComment()">add comment</button>
+    </p>
     <div>
       <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
     </div>
@@ -55,6 +57,23 @@ export default {
         }
         return arr
       }
+    },
+    addComment () {
+      axios.post(BASE_URL + 'comments.json',
+        {
+          'micropost_id': this.$route.params.id,
+          'text': document.getElementById('comment').value,
+          'parent_id': null
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
     }
   }
 
@@ -67,11 +86,6 @@ export default {
   counter-increment: microposts;
   content: counter(microposts) ". ";
   color: #828282;
-}
-
-.microposts-item {
-  padding-top: 0.3em;
-  font-size: 0.9em
 }
 
 .microposts-item-details {
