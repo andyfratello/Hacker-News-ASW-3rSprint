@@ -10,10 +10,11 @@
         </b>
       </p>
       <p>
-        <!-- cal canviar id 1 per l'id del user -->
         <router-link :to="{ path: '/user-submissions/' + user.id }" class="user-links">submissions</router-link>
       </p>
-      <p class="user-links">comments</p>
+      <p>
+        <router-link :to="{ path: '/user-comments/' + user.id }" class="user-links">comments</router-link>
+      </p>
     </div>
 
   </div>
@@ -34,6 +35,13 @@ export default {
     axios.get(BASE_URL + 'users/' + this.$route.params.id + '.json')
       .then((res) => {
         this.user = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    axios.put(BASE_URL + 'users/' + this.$route.params.id + '.json')
+      .then((res) => {
+        this.res = res.status
       })
       .catch((err) => {
         console.log(err)

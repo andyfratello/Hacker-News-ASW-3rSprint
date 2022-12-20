@@ -41,5 +41,4 @@ export default {
   background-color: #f6f6ef;
   padding-left: 2em
 }
-
 </style>

@@ -9,6 +9,9 @@ import Profile from '@/views/Profile'
 import Single from '@/views/Single'
 import User from '@/views/User'
 import UserSubmissions from '@/views/UserSubmissions'
+import UserComments from '@/views/UserComments'
+import UpvotedSubmissions from '@/views/UpvotedSubmissions.vue'
+import UpvotedComments from '@/views/UpvotedComments.vue'
 import VueTimeago from 'vue-timeago'
 import EditMicropost from '@/views/EditMicropost.vue'
 
@@ -65,6 +68,21 @@ export default new Router({
       path: '/user-submissions/:id',
       name: 'UserSubmissions',
       component: UserSubmissions
+    },
+    {
+      path: '/user-comments/:id',
+      name: 'UserComments',
+      component: UserComments
+    },
+    {
+      path: '/upvoted-submissions/:id',
+      name: 'UpvotedSubmissions',
+      component: UpvotedSubmissions
+    },
+    {
+      path: '/upvoted-comments/:id',
+      name: 'UpvotedComments',
+      component: UpvotedComments
     },
     {
       path: '/micropost/:id/edit',
