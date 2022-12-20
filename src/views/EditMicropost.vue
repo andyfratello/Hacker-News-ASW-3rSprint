@@ -20,6 +20,19 @@
   </div>
 </template>
 
+<tbody>
+<table>
+  <tbody>
+  <td>
+    <label>title:</label>
+  </td>
+  <td>
+    <textarea placeholder="editMicropost"></textarea>
+  </td>
+  </tbody>
+</table>
+</tbody>
+
 <script>
 
 import MicropostItem from '../components/MicropostItem.vue'
