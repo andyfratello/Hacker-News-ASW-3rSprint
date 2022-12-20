@@ -69,32 +69,6 @@ export default {
       )
   },
   methods: {
-    reply () {
-      axios.post(BASE_URL + 'comments.json',
-        {
-          'micropost_id': this.micropost.id,
-          'text': this.text,
-          'parent_id': this.comment.id
-        },
-        {
-          'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    onlyParents (arr) {
-      if (arr && arr.length) {
-        for (let i = 0; i < arr.length; ++i) {
-          if (arr[i].parent_id != null) {
-            arr.splice(i, 1)
-          }
-        }
-        return arr
-      }
-    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',

@@ -34,7 +34,7 @@
       </p>
       <p class="comment-text">{{ comment.text }}</p>
       <p>
-        <router-link :to="{ path: '/comments/' + comment.id }" class="reply-link">{{ 'reply' }}</router-link>
+        <router-link :to="{ path: '/comments/' + comment.id + '/reply'}" class="reply-link">{{ 'reply' }}</router-link>
       </p>
     </div>
     <div>
@@ -75,11 +75,11 @@ export default {
     }
     const response = await fetch(BASE_URL + '/users/upvoted_comments/1.json', requestOptions)
     const json = await response.json()
-    console.log(json)
+    //  console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
         if ((json[i]['comment_id']) === this.comment.id) {
-          console.log()
+          //  console.log()
           this.voted_comment = true
         }
       }
@@ -97,8 +97,8 @@ export default {
       }
     },
     deleteComment: async function () {
-      console.log(this.comment.id)
-      console.log(BASE_URL + 'microposts' + this.comment.id + '.json')
+      //  console.log(this.comment.id)
+      //  console.log(BASE_URL + 'microposts' + this.comment.id + '.json')
       await axios.delete(BASE_URL + '/comments/' + this.comment.id + '.json',
         {
           'headers': {
@@ -117,9 +117,10 @@ export default {
           'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
         }
       }
-      console.log(this.comment.id)
-      const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
-      console.log(response.json())
+      //  console.log(this.comment.id)
+      await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
+      //  const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
+      //  console.log(response.json())
       this.voted_comment = true
     },
     async unvote () {

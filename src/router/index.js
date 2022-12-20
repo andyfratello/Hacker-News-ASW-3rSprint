@@ -8,6 +8,7 @@ import Submit from '@/views/Submit'
 import Profile from '@/views/Profile'
 import Single from '@/views/Single'
 import SingleComment from '@/views/SingleComment'
+import CommentReply from '@/views/CommentReply'
 import User from '@/views/User'
 import UserSubmissions from '@/views/UserSubmissions'
 import VueTimeago from 'vue-timeago'
@@ -60,6 +61,11 @@ export default new Router({
       path: '/comments/:id',
       name: 'SingleComment',
       component: SingleComment
+    },
+    {
+      path: '/comments/:id/reply',
+      name: 'CommentReply',
+      component: CommentReply
     },
     {
       path: '/users/:id',
