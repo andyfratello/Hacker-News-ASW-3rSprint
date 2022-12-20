@@ -80,6 +80,32 @@ export default {
       })
   },
   methods: {
+    async voteLike () {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        }
+      }
+      console.log(this.micropost.id)
+      const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
+      console.log(response.json())
+      this.voted = true
+    },
+    async unvote () {
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        }
+      }
+      await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
+      this.voted = false
+    },
     addComment () {
       axios.post(BASE_URL + 'comments.json',
         {
@@ -117,34 +143,6 @@ export default {
           this.voted = true
         }
       }
-    }
-  },
-  methods: {
-    async voteLike () {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
-        }
-      }
-      console.log(this.micropost.id)
-      const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
-      console.log(response.json())
-      this.voted = true
-    },
-    async unvote () {
-      const requestOptions = {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
-        }
-      }
-      await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
-      this.voted = false
     }
   }
 }

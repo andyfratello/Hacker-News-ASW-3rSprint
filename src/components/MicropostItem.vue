@@ -73,6 +73,18 @@ export default {
     }
   },
   methods: {
+    deleteMicropost: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        }
+      )
+      window.location.reload()
+    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',
@@ -99,22 +111,6 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       this.voted_microposts = false
-      window.location.reload()
-    }
-  }
-}
-  name: 'MicropostItem',
-  methods: {
-    deleteMicropost: async function () {
-      console.log(this.item.id)
-      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
-      await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
-        {
-          'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
-          }
-        }
-      )
       window.location.reload()
     }
   }
@@ -158,13 +154,6 @@ export default {
 
 .micropost-title {
   font-size: 1.1em;
-  color: rgba(7, 13, 13, 0.95);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.micropost-creator {
-  font-size: 1em;
   color: rgba(7, 13, 13, 0.95);
   text-decoration: none;
   font-weight: 600;
