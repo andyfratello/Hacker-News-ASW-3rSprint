@@ -10,6 +10,7 @@ import Single from '@/views/Single'
 import User from '@/views/User'
 import UserSubmissions from '@/views/UserSubmissions'
 import VueTimeago from 'vue-timeago'
+import EditMicropost from '@/views/EditMicropost.vue'
 
 Vue.use(VueTimeago, {
   name: 'Timeago',
@@ -64,6 +65,11 @@ export default new Router({
       path: '/user-submissions/:id',
       name: 'UserSubmissions',
       component: UserSubmissions
+    },
+    {
+      path: '/micropost/:id/edit',
+      name: 'EditMicropost',
+      component: EditMicropost
     }
   ]
 })
