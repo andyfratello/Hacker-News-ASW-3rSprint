@@ -1,5 +1,5 @@
 <template>
-  <div class="microposts-item">
+  <div class="container">
     <p class="microposts-item-title">
       <span v-if="micropost.user_id === 1">
         <span class="unable_unvote">*</span>
@@ -39,6 +39,10 @@
     <textarea placeholder="write a comment..." name="text"></textarea>
     <span>
   </span>
+    <textarea v-model="text" placeholder="write a comment..."></textarea>
+    <p>
+      <button v-on:click="addComment">add comment</button>
+    </p>
   </div>
 </template>
 
@@ -75,27 +79,6 @@ export default {
         console.log(err)
       })
   },
-  async beforeCreate () {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
-      }
-    }
-    const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
-    const json = await response.json()
-    console.log(json)
-    if (json != null) {
-      for (let i = 0; i < json.length; ++i) {
-        if ((json[i]['id']) === this.micropost.id) {
-          console.log()
-          this.voted = true
-        }
-      }
-    }
-  },
   methods: {
     async voteLike () {
       const requestOptions = {
@@ -122,6 +105,44 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       this.voted = false
+    },
+    addComment () {
+      axios.post(BASE_URL + 'comments.json',
+        {
+          'micropost_id': this.$route.params.id,
+          'text': this.text,
+          'parent_id': null
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    }
+  },
+  async beforeCreate () {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+      }
+    }
+    const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
+    const json = await response.json()
+    console.log(json)
+    if (json != null) {
+      for (let i = 0; i < json.length; ++i) {
+        if ((json[i]['id']) === this.micropost.id) {
+          console.log()
+          this.voted = true
+        }
+      }
     }
   }
 }
@@ -132,11 +153,6 @@ export default {
   counter-increment: microposts;
   content: counter(microposts) ". ";
   color: #828282;
-}
-
-.microposts-item {
-  padding-top: 0.3em;
-  font-size: 0.9em
 }
 
 .microposts-item-details {

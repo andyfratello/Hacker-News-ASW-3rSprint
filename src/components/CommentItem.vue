@@ -4,7 +4,9 @@
       <p class="comment-item-details">
         {{ comment.likes_count }} points by
         <span v-if="comment.user_id!==1">
-          <router-link :to="{ path: '/users/' + comment.user_id }" class="user-email">{{ comment.creator_name }}</router-link>
+          <router-link :to="{ path: '/users/' + comment.user_id }" class="user-email">{{
+              comment.creator_name
+            }}</router-link>
         </span>
         <span v-else>
           <router-link to="/profile" class="user-email">{{ comment.creator_name }}</router-link>
@@ -15,7 +17,7 @@
         <span v-if="comment.user_id===1">|
           <a class="comment-item-url" href="#">edit</a>
           |
-          <a class="comment-item-url" href="#">delete</a>
+          <a class="comment-item-url" v-on:click="deleteComment">delete</a>
         </span>
       </p>
 
@@ -27,9 +29,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const BASE_URL = 'https://mysite-mnjc.onrender.com/'
+
 export default {
   props: ['comment'],
-  name: 'CommentItem'
+  name: 'CommentItem',
+  methods: {
+    deleteComment: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + 'comments/' + this.comment.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        }
+      )
+      window.location.reload()
+    }
+  }
 }
 </script>
 
@@ -46,18 +66,11 @@ export default {
   color: black;
 
 }
-
-.comment-creator {
-  font-size: 1em;
-  color: rgba(7, 13, 13, 0.95);
-  text-decoration: none;
-  font-weight: 600;
-}
-
 .comment-item-details {
   font-size: 0.7em;
   color: #828282;
   margin-top: 0.5em;
+  cursor: pointer;
 }
 
 .comment-item-url:hover {

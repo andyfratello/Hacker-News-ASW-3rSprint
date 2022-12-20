@@ -13,6 +13,7 @@ import UserComments from '@/views/UserComments'
 import UpvotedSubmissions from '@/views/UpvotedSubmissions.vue'
 import UpvotedComments from '@/views/UpvotedComments.vue'
 import VueTimeago from 'vue-timeago'
+import EditMicropost from '@/views/EditMicropost.vue'
 
 Vue.use(VueTimeago, {
   name: 'Timeago',
@@ -82,6 +83,11 @@ export default new Router({
       path: '/upvoted-comments/:id',
       name: 'UpvotedComments',
       component: UpvotedComments
+    },
+    {
+      path: '/micropost/:id/edit',
+      name: 'EditMicropost',
+      component: EditMicropost
     }
   ]
 })
