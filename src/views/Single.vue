@@ -36,50 +36,72 @@
     <p class="micropost-text">
       {{ micropost.text }}
     </p>
-    <textarea placeholder="write a comment..." name="text"></textarea>
-    <span>
-  </span>
-    <textarea v-model="text" placeholder="write a comment..."></textarea>
+    <textarea v-model="text" id="comment" placeholder="write a comment..."></textarea>
     <p>
-      <button v-on:click="addComment">add comment</button>
+      <button v-on:click="addComment()">add comment</button>
     </p>
+    <div>
+      <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
+    </div>
   </div>
 </template>
 
 <script>
+import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   name: 'Single',
-  data: function () {
+  components: {CommentItem},
+  data () {
     return {
       micropost: {},
       comments: [],
       voted: false
     }
   },
-  created: function () {
-    axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
-      .then((res) => {
-        this.micropost = res.data
-        this.micropost.comments = []
-        this.micropost.kids.forEach(id => {
-          axios.get(BASE_URL + 'comments/' + id + '.json')
-            .then(res => {
-              this.comments.push(res.data)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+  async mounted () {
+    await axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
+      .then(response => (this.micropost = response.data))
+    /* const response2 = await fetch(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+     const json = await response2.json()
+     console.log(json)
+     this.comments = json */
+
+    await axios.get(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+      .then(response => (this.comments = response.data)
+      )
   },
   methods: {
+    onlyParents (arr) {
+      if (arr && arr.length) {
+        for (let i = 0; i < arr.length; ++i) {
+          if (arr[i].parent_id != null) {
+            arr.splice(i, 1)
+          }
+        }
+        return arr
+      }
+    },
+    addComment () {
+      axios.post(BASE_URL + 'comments.json',
+        {
+          'micropost_id': this.$route.params.id,
+          'text': document.getElementById('comment').value,
+          'parent_id': null
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',
@@ -105,23 +127,6 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       this.voted = false
-    },
-    addComment () {
-      axios.post(BASE_URL + 'comments.json',
-        {
-          'micropost_id': this.$route.params.id,
-          'text': this.text,
-          'parent_id': null
-        },
-        {
-          'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      window.location.reload()
     }
   },
   async beforeCreate () {
