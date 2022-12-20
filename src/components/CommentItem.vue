@@ -136,6 +136,21 @@ export default {
       this.voted_comment = false
     }
   }
+  name: 'CommentItem',
+  methods: {
+    deleteComment: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + 'comments/' + this.comment.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        }
+      )
+      window.location.reload()
+    }
+  }
 }
 </script>
 

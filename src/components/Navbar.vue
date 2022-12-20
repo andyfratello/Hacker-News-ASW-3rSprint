@@ -4,7 +4,7 @@
       <li class="pure-menu-item">
         <img class="logo" src= 'https://avatars.githubusercontent.com/u/4703068?s=280&v=4'/>
       </li>
-      <router-link to="/" class="pure-menu-heading pure-menu-link">HackerNews</router-link>
+      <router-link to="/" class="pure-menu-heading pure-menu-link">Hacker News</router-link>
       <ul class="pure-menu-list" style="display:flex;">
         <div>
           |

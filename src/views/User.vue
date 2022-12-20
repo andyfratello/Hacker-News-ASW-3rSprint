@@ -2,8 +2,7 @@
   <div class="container">
     <div>
       <h3 class="user-email-profile">{{ user.email }}</h3>
-      <br>
-      <p class="user-about">About: <b>{{ user.about }}</b></p>
+      <p class="user-about-us">About: <b>{{ user.about }}</b></p>
       <br>
       <p>Created:
         <b>
@@ -11,10 +10,11 @@
         </b>
       </p>
       <p>
-        <!-- cal canviar id 1 per l'id del user -->
         <router-link :to="{ path: '/user-submissions/' + user.id }" class="user-links">submissions</router-link>
       </p>
-      <p class="user-links">comments</p>
+      <p>
+        <router-link :to="{ path: '/user-comments/' + user.id }" class="user-links">comments</router-link>
+      </p>
     </div>
 
   </div>
@@ -39,14 +39,20 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    axios.put(BASE_URL + 'users/' + this.$route.params.id + '.json')
+      .then((res) => {
+        this.res = res.status
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>
 
 <style>
-.user-about {
+.user-about-us {
   margin-bottom: -1em;
-
 }
 
 .user-email-profile {
