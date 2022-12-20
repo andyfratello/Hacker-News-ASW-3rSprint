@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import CommentItem from '../components/CommentItem.vue'
+import { globalStore } from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -19,7 +20,7 @@ export default {
     return {
       commentLikes: [],
       comments: [],
-      AuthStr: 'KEgviRuGemHSgbsYzEASWdVy'
+      AuthStr: globalStore.loggedUser.api_key
     }
   },
   created: function () {

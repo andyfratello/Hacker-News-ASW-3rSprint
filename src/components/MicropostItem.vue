@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com'
 export default {
@@ -55,7 +56,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
@@ -77,7 +78,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       console.log(this.item.id)
@@ -92,7 +93,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
