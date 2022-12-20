@@ -43,6 +43,23 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+  },
+  methods: {
+    async edit () {
+      axios.put(BASE_URL + 'microposts/' + this.micropost.id + '.json',
+        {
+          'text': this.text
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.history.back()
+    }
   }
 }
 </script>
