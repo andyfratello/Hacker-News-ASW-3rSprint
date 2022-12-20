@@ -19,10 +19,10 @@
     <p class="comment-text">
       {{ comment.text }}
     </p>
-    <textarea v-model="comment.text" placeholder="Edit the comment..."></textarea>
+    <textarea v-model="text" placeholder="Edit the comment..."></textarea>
     <br>
     <div>
-      <button v-on:click="reply">reply</button>
+      <button v-on:click="edit">edit comment</button>
     </div>
   </div>
 </template>
@@ -94,6 +94,22 @@ export default {
       }
       await fetch(BASE_URL + 'comment_likes/' + this.item.id, requestOptions)
       this.voted_comment = false
+    },
+    async edit () {
+      axios.put(BASE_URL + 'comments/' + this.comment.id + '.json',
+        {
+          'text': this.text
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      //  window.location.reload()
+      window.history.back()
     }
   }
 
