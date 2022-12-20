@@ -4,8 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import * as filters from './utils/filter'
+import {globalStore} from './model/sesion'
 
 Vue.config.productionTip = false
+getUser()
+async function getUser () {
+  const response = await fetch('https://mysite-mnjc.onrender.com/' + '/users/1.json')
+  const json = await response.json()
+  console.log(json)
+  globalStore.loggedUser = json
+  console.log(globalStore.loggedUser)
+}
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
@@ -15,6 +24,6 @@ Object.keys(filters).forEach(key => {
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
