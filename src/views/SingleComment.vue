@@ -62,7 +62,7 @@ export default {
     console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
-        if ((json[i]['id']) === this.item.id) {
+        if ((json[i]['id']) === this.comment.id) {
           console.log()
           this.voted_comment = true
         }
@@ -84,10 +84,14 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      console.log(this.item.id)
-      const response = await fetch(BASE_URL + '/comment_likes/' + this.item.id, requestOptions)
-      console.log(response.json())
+      console.log(this.comment.id)
+      await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
+      await axios.get(BASE_URL + '/comments/' + this.comment.id + '.json')
+        .then((res) => {
+          this.comment.likes_count = res.data.likes_count
+        })
       this.voted_comment = true
+      this.$forceUpdate()
     },
     async unvote () {
       const requestOptions = {
@@ -98,8 +102,13 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      await fetch(BASE_URL + 'comment_likes/' + this.item.id, requestOptions)
+      await fetch(BASE_URL + 'comment_likes/' + this.comment.id, requestOptions)
+      await axios.get(BASE_URL + '/comments/' + this.comment.id + '.json')
+        .then((res) => {
+          this.comment.likes_count = res.data.likes_count
+        })
       this.voted_comment = false
+      this.$forceUpdate()
     },
     async edit () {
       axios.put(BASE_URL + 'comments/' + this.comment.id + '.json',

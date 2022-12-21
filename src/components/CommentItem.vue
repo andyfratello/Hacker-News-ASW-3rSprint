@@ -125,8 +125,10 @@ export default {
       }
       //  console.log(this.comment.id)
       await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
-      //  const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
-      //  console.log(response.json())
+      await axios.get(BASE_URL + '/comments/' + this.comment.id + '.json')
+        .then((res) => {
+          this.comment.likes_count = res.data.likes_count
+        })
       this.voted_comment = true
       this.$forceUpdate()
     },
@@ -140,6 +142,10 @@ export default {
         }
       }
       await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
+      await axios.get(BASE_URL + '/comments/' + this.comment.id + '.json')
+        .then((res) => {
+          this.comment.likes_count = res.data.likes_count
+        })
       this.voted_comment = false
       this.$forceUpdate()
     }
@@ -196,15 +202,12 @@ export default {
 .upvoted_button_c {
   font-size: 8pt;
   color: #9a9a9a;
-  outline: none;
-  border: none;
   background: none;
-  width: 20px;
-  height: 20px;
-  text-align: left;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
-  line-height: 0;
-  padding-left: -3px;
+  font-weight: normal;
 }
 
 .downvoted_button_c {

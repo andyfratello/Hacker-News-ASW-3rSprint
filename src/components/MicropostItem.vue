@@ -69,11 +69,9 @@ export default {
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/' + globalStore.loggedUser.id + '.json', requestOptions)
     const json = await response.json()
-    console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
         if ((json[i]['id']) === this.item.id) {
-          console.log()
           this.voted_microposts = true
         }
       }
@@ -101,10 +99,10 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      console.log(this.item.id)
       const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
-      console.log(response.json())
-      this.item.count_likes =
+      const json = await response.json()
+      console.log(json['likes_count'])
+      this.item.likes_count = json['likes_count']
       this.voted_microposts = true
       this.$forceUpdate()
     },
@@ -117,7 +115,10 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
+      const json = await response.json()
+      console.log(json['likes_count'])
+      this.item.likes_count = json['likes_count']
       this.voted_microposts = false
       this.$forceUpdate()
     }

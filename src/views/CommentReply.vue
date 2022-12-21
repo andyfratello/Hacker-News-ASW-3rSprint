@@ -59,8 +59,7 @@ export default {
   },
   async mounted () {
     await axios.get(`${BASE_URL}/comments/` + this.$route.params.id + '.json')
-      .then(response => (this.comment = response.data)
-      )
+      .then(response => (this.comment = response.data))
   },
   methods: {
     async reply () {
@@ -79,6 +78,7 @@ export default {
           console.log(err)
         })
       this.$forceUpdate()
+      window.location.back()
     }
   }
 

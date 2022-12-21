@@ -119,10 +119,12 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      console.log(this.micropost.id)
       const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
-      console.log(response.json())
+      const json = await response.json()
+      console.log(json['likes_count'])
+      this.micropost.likes_count = json['likes_count']
       this.voted = true
+      this.$forceUpdate()
     },
     async unvote () {
       const requestOptions = {
@@ -133,8 +135,12 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
+      const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
+      const json = await response.json()
+      console.log(json['likes_count'])
+      this.micropost.likes_count = json['likes_count']
       this.voted = false
+      this.$forceUpdate()
     }
   },
   async beforeCreate () {
