@@ -112,7 +112,7 @@ export default {
           }
         }
       )
-      window.location.reload()
+      this.$forceUpdate()
     },
     async voteLike () {
       const requestOptions = {
@@ -128,6 +128,7 @@ export default {
       //  const response = await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
       //  console.log(response.json())
       this.voted_comment = true
+      this.$forceUpdate()
     },
     async unvote () {
       const requestOptions = {
@@ -140,6 +141,7 @@ export default {
       }
       await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
       this.voted_comment = false
+      this.$forceUpdate()
     }
   }
 }

@@ -18,7 +18,7 @@
 <script>
 import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
-import { globalStore } from '../model/sesion'
+import {globalStore} from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -78,8 +78,7 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      //  window.location.reload()
-      window.history.back()
+      this.$forceUpdate()
     }
   }
 

@@ -108,7 +108,7 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      window.location.reload()
+      this.$forceUpdate()
     },
     async voteLike () {
       const requestOptions = {

@@ -16,6 +16,7 @@ import UpvotedSubmissions from '@/views/UpvotedSubmissions.vue'
 import UpvotedComments from '@/views/UpvotedComments.vue'
 import VueTimeago from 'vue-timeago'
 import EditMicropost from '@/views/EditMicropost.vue'
+import {globalStore} from '../model/sesion'
 
 Vue.use(VueTimeago, {
   name: 'Timeago',
@@ -23,6 +24,20 @@ Vue.use(VueTimeago, {
 })
 
 Vue.use(Router)
+
+if (!globalStore.first) {
+  getUser()
+}
+
+async function getUser () {
+  const response = await fetch('https://mysite-mnjc.onrender.com/' + '/users/1.json')
+  const json = await response.json()
+  console.log(json)
+  globalStore.loggedUser = json
+  globalStore.first = true
+  console.log(globalStore.loggedUser)
+  console.log(globalStore.first)
+}
 
 export default new Router({
   routes: [

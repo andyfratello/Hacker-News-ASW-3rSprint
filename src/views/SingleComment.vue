@@ -114,8 +114,7 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      //  window.location.reload()
-      window.history.back()
+      this.$forceUpdate()
     }
   }
 

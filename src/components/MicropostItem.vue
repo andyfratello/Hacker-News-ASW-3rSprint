@@ -7,7 +7,7 @@
       <span v-else>
         <span v-if="this.voted_microposts === true" class="already_voted"></span>
         <span v-else>
-          <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
+          <button class="upvoted_button_c" v-on:click="voteLike">▲</button>
         </span>
       </span>
       <router-link :to="{ path: '/micropost/' + item.id }" class="micropost-title">{{ item.title }}</router-link>
@@ -25,7 +25,8 @@
       |
       <a class="comment-item-url" href="#">comment</a>
       <a v-if="this.voted_microposts === true">
-        | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
+        |
+        <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </a>
       <span v-if="item.user_id === globalStore.loggedUser.id">|
         <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="comment-item-url">edit</router-link>
@@ -89,7 +90,7 @@ export default {
           }
         }
       )
-      window.location.reload()
+      this.$forceUpdate()
     },
     async voteLike () {
       const requestOptions = {
@@ -103,8 +104,9 @@ export default {
       console.log(this.item.id)
       const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       console.log(response.json())
+      this.item.count_likes =
       this.voted_microposts = true
-      window.location.reload()
+      this.$forceUpdate()
     },
     async unvote () {
       const requestOptions = {
@@ -117,7 +119,7 @@ export default {
       }
       await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       this.voted_microposts = false
-      window.location.reload()
+      this.$forceUpdate()
     }
   }
 }
@@ -179,30 +181,30 @@ export default {
 .upvoted_button_c {
   font-size: 8pt;
   color: #9a9a9a;
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   font-weight: normal;
 }
 
 .downvoted_button_c {
   color: #828282;
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   font-weight: normal;
 }
 
 .downvoted_button_c:hover {
   color: #828282;
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   font-weight: normal;
   text-decoration: underline;
