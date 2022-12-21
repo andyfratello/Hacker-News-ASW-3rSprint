@@ -1,7 +1,7 @@
 <template>
   <div class="microposts-item">
     <p class="microposts-item-title">
-      <span v-if="item.user_id === 1">
+      <span v-if="item.user_id === globalStore.loggedUser.id">
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
@@ -15,7 +15,7 @@
     </p>
     <p class="microposts-item-details">
       {{ item.likes_count }} points by
-      <span v-if="item.user_id!==1">
+      <span v-if="item.user_id !== globalStore.loggedUser.id">
         <router-link :to="{ path: '/users/' + item.user_id }" class="user-email">{{ item.creator_name }}</router-link>
       </span>
       <span v-else>
@@ -27,7 +27,7 @@
       <a v-if="this.voted_microposts === true">
         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </a>
-      <span v-if="item.user_id===1">|
+      <span v-if="item.user_id === globalStore.loggedUser.id">|
         <a class="comment-item-url" href="#">edit</a>
         |
         <a class="comment-item-url" href="#">delete</a>
@@ -42,7 +42,13 @@
 import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com'
+
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   props: ['item'],
   name: 'MicropostItem',
   data () {
