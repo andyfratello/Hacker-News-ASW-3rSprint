@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import MicropostItem from '../components/MicropostItem.vue'
+import {globalStore} from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -21,7 +22,7 @@ export default {
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'microposts.json?user=' + this.$route.params.id)
+    axios.get(BASE_URL + 'microposts.json?user=' + globalStore.loggedUser.id)
       .then((res) => {
         this.microposts = res.data
       })

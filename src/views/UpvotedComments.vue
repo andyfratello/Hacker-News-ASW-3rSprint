@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import CommentItem from '../components/CommentItem.vue'
+import { globalStore } from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -19,11 +20,11 @@ export default {
     return {
       commentLikes: [],
       comments: [],
-      AuthStr: 'KEgviRuGemHSgbsYzEASWdVy'
+      AuthStr: globalStore.loggedUser.api_key
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'users/upvoted_comments/' + this.$route.params.id + '.json', {
+    axios.get(BASE_URL + 'users/upvoted_comments/' + globalStore.loggedUser.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
         console.log(res.data)

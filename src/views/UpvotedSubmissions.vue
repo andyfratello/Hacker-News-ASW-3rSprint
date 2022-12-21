@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios'
 import MicropostItem from '../components/MicropostItem.vue'
+import { globalStore } from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -18,11 +19,11 @@ export default {
   data: function () {
     return {
       microposts: [],
-      AuthStr: 'KEgviRuGemHSgbsYzEASWdVy'
+      AuthStr: globalStore.loggedUser.api_key
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'users/upvoted_submissions/' + this.$route.params.id + '.json', {
+    axios.get(BASE_URL + 'users/upvoted_submissions/' + globalStore.loggedUser.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
         this.microposts = res.data

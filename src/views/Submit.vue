@@ -4,12 +4,13 @@
     <input type="text" placeholder="title" name="title" v-model="posts.title" required> <br> <br>
     <input type="text" placeholder="url" name="url" v-model="posts.url"> <br> <br>
     <textarea placeholder="text" name="text" v-model="posts.text" required></textarea> <br> <br>
-    <button type="submit" v-on:click= "postData">Submit</button>
+    <button type="submit" v-on:click= "postData" class="button-submit">Submit</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -29,7 +30,7 @@ export default {
       await axios.post(BASE_URL + 'microposts.json', this.posts,
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         })
         .then((res) => {
@@ -49,8 +50,7 @@ export default {
 </script>
 
 <style>
-.submit-button {
-  color: white;
-  text-decoration: none;
+.button-submit {
+  min-height: 36px;
 }
 </style>

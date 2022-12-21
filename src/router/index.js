@@ -7,12 +7,16 @@ import Ask from '@/views/Ask'
 import Submit from '@/views/Submit'
 import Profile from '@/views/Profile'
 import Single from '@/views/Single'
+import SingleComment from '@/views/SingleComment'
+import CommentReply from '@/views/CommentReply'
 import User from '@/views/User'
 import UserSubmissions from '@/views/UserSubmissions'
 import UserComments from '@/views/UserComments'
 import UpvotedSubmissions from '@/views/UpvotedSubmissions.vue'
 import UpvotedComments from '@/views/UpvotedComments.vue'
 import VueTimeago from 'vue-timeago'
+import EditMicropost from '@/views/EditMicropost.vue'
+import {globalStore} from '../model/sesion'
 
 Vue.use(VueTimeago, {
   name: 'Timeago',
@@ -20,6 +24,20 @@ Vue.use(VueTimeago, {
 })
 
 Vue.use(Router)
+
+if (!globalStore.first) {
+  getUser()
+}
+
+async function getUser () {
+  const response = await fetch('https://mysite-mnjc.onrender.com/' + '/users/1.json')
+  const json = await response.json()
+  console.log(json)
+  globalStore.loggedUser = json
+  globalStore.first = true
+  console.log(globalStore.loggedUser)
+  console.log(globalStore.first)
+}
 
 export default new Router({
   routes: [
@@ -59,6 +77,16 @@ export default new Router({
       component: Single
     },
     {
+      path: '/comments/:id',
+      name: 'SingleComment',
+      component: SingleComment
+    },
+    {
+      path: '/comments/:id/reply',
+      name: 'CommentReply',
+      component: CommentReply
+    },
+    {
       path: '/users/:id',
       name: 'User',
       component: User
@@ -82,6 +110,11 @@ export default new Router({
       path: '/upvoted-comments/:id',
       name: 'UpvotedComments',
       component: UpvotedComments
+    },
+    {
+      path: '/micropost/:id/edit',
+      name: 'EditMicropost',
+      component: EditMicropost
     }
   ]
 })

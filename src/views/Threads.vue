@@ -4,7 +4,7 @@
       <h3>Loading...</h3>
     </div>
     <div>
-      <comment-item v-for="comment in comments" :key="comment.id" :comment="comment"/>
+      <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
     </div>
   </div>
 </template>
@@ -31,6 +31,18 @@ export default {
     return {
       comments,
       loading
+    }
+  },
+  methods: {
+    onlyParents (arr) {
+      if (arr && arr.length) {
+        for (let i = 0; i < arr.length; ++i) {
+          if (arr[i].parent_id != null) {
+            arr.splice(i, 1)
+          }
+        }
+        return arr
+      }
     }
   }
 }
