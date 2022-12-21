@@ -1,47 +1,49 @@
 <template>
   <div class="container">
-    <p class="microposts-item-title">
-      <span v-if="micropost.user_id === 1">
-        <span class="unable_unvote">*</span>
-      </span>
-      <span v-else>
-        <span v-if="this.voted === true" class="unable_unvote">*</span>
-        <span v-else>
-          <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
+    <div class="microposts-item">
+      <p class="microposts-item-title">
+        <span v-if="micropost.user_id === globalStore.loggedUser.id">
+          <span class="unable_unvote">*</span>
         </span>
-      </span>
-      <router-link :to="{ path: 'micropost/' + micropost.id }" class="micropost-title">{{ micropost.title }}</router-link>
-      <a :href="micropost.url" class='microposts-item-url'>{{ micropost.url }}</a>
-    </p>
-    <p class="microposts-item-details">
-      {{ micropost.likes_count }} points by
-      <span v-if="micropost.user_id!==1">
-        <router-link :to="{ path: '/users/' + micropost.user_id }" class="user-email">{{ micropost.creator_name }}</router-link>
-      </span>
-      <span v-else>
-        <router-link to="/profile" class="user-email">{{ micropost.creator_name }}</router-link>
-      </span>
-      <timeago :datetime="micropost.created_at" :auto-update="60"></timeago>
-      |
-      <a class="comment-item-url" href="#">comment</a>
-      <a v-if="this.voted === true">
-        | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
-      </a>
-      <span v-if="micropost.user_id===1">|
-        <a class="comment-item-url" href="#">edit</a>
+        <span v-else>
+          <span v-if="this.voted === true" class="already_voted"></span>
+          <span v-else>
+            <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
+          </span>
+        </span>
+        <router-link :to="{ path: 'micropost/' + micropost.id }" class="micropost-title">{{ micropost.title }}</router-link>
+        <a :href="micropost.url" class='microposts-item-url'>{{ micropost.url }}</a>
+      </p>
+      <p class="microposts-item-details">
+        {{ micropost.likes_count }} points by
+        <span v-if="micropost.user_id !== globalStore.loggedUser.id">
+          <router-link :to="{ path: '/users/' + micropost.user_id }" class="user-email">{{ micropost.creator_name }}</router-link>
+        </span>
+        <span v-else>
+          <router-link to="/profile" class="user-email">{{ micropost.creator_name }}</router-link>
+        </span>
+        <timeago :datetime="micropost.created_at" :auto-update="60"></timeago>
         |
-        <a class="comment-item-url" href="#">delete</a>
-      </span>
-    </p>
-    <p class="micropost-text">
-      {{ micropost.text }}
-    </p>
-    <textarea v-model="text" id="comment" placeholder="write a comment..."></textarea>
-    <p>
-      <button v-on:click="addComment()">add comment</button>
-    </p>
-    <div>
-      <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
+        <a class="comment-item-url" href="#">comment</a>
+        <a v-if="this.voted === true">
+          | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
+        </a>
+        <span v-if="micropost.user_id === globalStore.loggedUser.id">|
+          <a class="comment-item-url" href="#">edit</a>
+          |
+          <a class="comment-item-url" href="#">delete</a>
+        </span>
+      </p>
+      <p class="micropost-text">
+        {{ micropost.text }}
+      </p>
+      <textarea v-model="text" id="comment" placeholder="write a comment..."></textarea>
+      <p>
+        <button v-on:click="addComment()">add comment</button>
+      </p>
+      <div>
+        <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
+      </div>
     </div>
   </div>
 </template>
@@ -49,10 +51,16 @@
 <script>
 import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
+import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   name: 'Single',
   components: {CommentItem},
   data () {
@@ -108,7 +116,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       console.log(this.micropost.id)
@@ -122,7 +130,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
@@ -158,6 +166,11 @@ export default {
   counter-increment: microposts;
   content: counter(microposts) ". ";
   color: #828282;
+}
+
+.microposts-item {
+  padding-top: 0.3em;
+  font-size: 0.9em
 }
 
 .microposts-item-details {

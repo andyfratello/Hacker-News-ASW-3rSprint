@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <p class="comment-item-details">
-      <span v-if="comment.user_id === 1">
+      <span v-if="comment.user_id === globalStore.loggedUser.id">
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_comment === true" class="unable_unvote">*</span>
+        <span v-if="this.voted_comment === true" class="unable_unvote"></span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -30,10 +30,16 @@
 <script>
 import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
+import {globalStore} from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   name: 'SingleComment',
   components: {CommentItem},
   data () {

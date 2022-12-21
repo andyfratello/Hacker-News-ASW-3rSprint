@@ -1,44 +1,39 @@
 <template>
   <div class="container">
-    <div>
-      <div>
-        <div class="dropdown">
-          <button class="dropbtn">Choose profile</button>
-          <div class="dropdown-content">
-            <a href="#" v-on:click="getUser1">User 1</a>
-            <a href="#" v-on:click="getUser2">User 2</a>
-            <a href="#" v-on:click="getUser3">User 3</a>
-          </div>
-        </div>
-        <h3 class="user-email-profile">{{ globalStore.loggedUser.email }}</h3>
-        <p class="user-about">About:</p>
-        <p><textarea v-model="globalStore.loggedUser.about" placeholder="Say something about you..." name="about"
-        ></textarea>
-        </p>
-        <p>Created:
-          <b>
-            <timeago :datetime="globalStore.loggedUser.created_at" :auto-update="60"></timeago>
-          </b>
-        </p>
-        <p>Api Key: {{ globalStore.loggedUser.api_key }}</p>
-        <p>
-          <router-link :to="{ path: '/user-submissions/' + globalStore.loggedUser.id }" class="user-links">submissions</router-link>
-        </p>
-        <p>
-          <router-link to="/threads" class="user-links">comments</router-link>
-        </p>
-        <p>
-          <router-link :to="{ path: '/upvoted-submissions/' + globalStore.loggedUser.id }" class="user-links">upvoted submissions
-          </router-link>
-          <span>/</span>
-          <router-link :to="{ path: '/upvoted-comments/' + globalStore.loggedUser.id }" class="user-links-comments">comments</router-link>
-        </p>
-        <p>
-          <button v-on:click="update" class="button-update">Update</button>
-        </p>
+    <div class="dropdown">
+      <button class="dropbtn">Choose profile</button>
+      <div class="dropdown-content">
+        <a href="#" v-on:click="getUser1">User 1</a>
+        <a href="#" v-on:click="getUser2">User 2</a>
+        <a href="#" v-on:click="getUser3">User 3</a>
       </div>
     </div>
-
+    <h3 class="user-email-profile">{{ globalStore.loggedUser.email }}</h3>
+    <p class="user-about">About:</p>
+    <p><textarea v-model="globalStore.loggedUser.about" placeholder="Say something about you..." name="about"
+    ></textarea>
+    </p>
+    <p>Created:
+      <b>
+        <timeago :datetime="globalStore.loggedUser.created_at" :auto-update="60"></timeago>
+      </b>
+    </p>
+    <p>Api Key: {{ globalStore.loggedUser.api_key }}</p>
+    <p>
+      <router-link :to="{ path: '/user-submissions/' + globalStore.loggedUser.id }" class="user-links">submissions</router-link>
+    </p>
+    <p>
+      <router-link to="/threads" class="user-links">comments</router-link>
+    </p>
+    <p>
+      <router-link :to="{ path: '/upvoted-submissions/' + globalStore.loggedUser.id }" class="user-links">upvoted submissions
+      </router-link>
+      <span>/</span>
+      <router-link :to="{ path: '/upvoted-comments/' + globalStore.loggedUser.id }" class="user-links-comments">comments</router-link>
+    </p>
+    <p>
+      <button v-on:click="update" class="button-update">Update</button>
+    </p>
   </div>
 </template>
 

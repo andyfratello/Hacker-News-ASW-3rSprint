@@ -28,9 +28,9 @@
         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </a>
       <span v-if="item.user_id === globalStore.loggedUser.id">|
-        <a class="comment-item-url" href="#">edit</a>
+        <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="micropost-title">edit</router-link>
         |
-        <a class="comment-item-url" href="#">delete</a>
+        <a class="comment-item-url" v-on:click="deleteMicropost">delete</a>
       </span>
     </p>
     <span>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com'
@@ -78,6 +79,18 @@ export default {
     }
   },
   methods: {
+    deleteMicropost: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': globalStore.loggedUser.api_key
+          }
+        }
+      )
+      window.location.reload()
+    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',

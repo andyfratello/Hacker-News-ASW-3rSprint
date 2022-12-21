@@ -2,17 +2,17 @@
   <div>
     <div class="comment-item">
       <p class="comment-item-details">
-        <span v-if="comment.user_id === 1">
+        <span v-if="comment.user_id === globalStore.loggedUser.id">
           <span class="unable_unvote">*</span>
         </span>
         <span v-else>
-          <span v-if="this.voted_comment === true" class="unable_unvote">*</span>
+          <span v-if="this.voted_comment === true" class="unable_unvote"></span>
           <span v-else>
             <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
           </span>
         </span>
         {{ comment.likes_count }} points by
-        <span v-if="comment.user_id!==1">
+        <span v-if="comment.user_id !== globalStore.loggedUser.id">
           <router-link :to="{ path: '/users/' + comment.user_id }" class="user-email">{{
               comment.creator_name
             }}</router-link>
@@ -23,7 +23,7 @@
         <timeago :datetime="comment.created_at" :auto-update="60"></timeago>
         |
         <router-link :to="{ path: '/micropost/' + comment.micropost_id }" class="comment-item-url">parent</router-link>
-        <span v-if="comment.user_id===1">|
+        <span v-if="comment.user_id === globalStore.loggedUser.id">|
           <router-link :to="{ path: '/comments/' + comment.id }" class="comment-item-url">edit</router-link>
           |
           <a class="comment-item-url" v-on:click="deleteComment">delete</a>
@@ -46,10 +46,16 @@
 
 <script>
 import axios from 'axios'
+import { globalStore } from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   props: ['comment'],
   name: 'CommentItem',
   data () {
@@ -70,7 +76,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + '/users/upvoted_comments/1.json', requestOptions)
@@ -102,7 +108,7 @@ export default {
       await axios.delete(BASE_URL + '/comments/' + this.comment.id + '.json',
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         }
       )
@@ -114,7 +120,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       //  console.log(this.comment.id)
@@ -129,7 +135,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
@@ -158,6 +164,13 @@ export default {
   color: #828282;
   margin-top: 0.5em;
   cursor: pointer;
+}
+
+.comment-item-url {
+  font-size: 1em;
+  color: #828282;
+  margin-top: -0.5em;
+  text-decoration: none;
 }
 
 .comment-item-url:hover {
@@ -204,12 +217,30 @@ export default {
 
 .downvoted_button_c:hover {
   color: #828282;
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   font-weight: normal;
+  text-decoration: underline;
+}
+
+.reply-link {
+  font-size: 1em;
+  color: black;
+  cursor: pointer;
+}
+
+.user-email {
+  font-size: 1em;
+  color: rgba(7, 13, 13, 0.95);
+  text-decoration: none;
+}
+
+.user-email:hover {
+  font-size: 1em;
+  color: rgba(7, 13, 13, 0.95);
   text-decoration: underline;
 }
 </style>
