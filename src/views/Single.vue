@@ -1,5 +1,5 @@
 <template>
-  <div class="microposts-item">
+  <div class="container">
     <p class="microposts-item-title">
       <span v-if="micropost.user_id === 1">
         <span class="unable_unvote">*</span>
@@ -36,75 +36,79 @@
     <p class="micropost-text">
       {{ micropost.text }}
     </p>
-    <textarea placeholder="write a comment..." name="text"></textarea>
-    <span>
-  </span>
+    <textarea v-model="text" id="comment" placeholder="write a comment..."></textarea>
+    <p>
+      <button v-on:click="addComment()">add comment</button>
+    </p>
+    <div>
+      <comment-item v-for="comment in onlyParents(comments)" :key="comment.id" :comment="comment"/>
+    </div>
   </div>
 </template>
 
 <script>
+import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
-import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
   name: 'Single',
-  data: function () {
+  components: {CommentItem},
+  data () {
     return {
       micropost: {},
       comments: [],
       voted: false
     }
   },
-  created: function () {
-    axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
-      .then((res) => {
-        this.micropost = res.data
-        this.micropost.comments = []
-        this.micropost.kids.forEach(id => {
-          axios.get(BASE_URL + 'comments/' + id + '.json')
-            .then(res => {
-              this.comments.push(res.data)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  },
-  async beforeCreate () {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'x-api-key': globalStore.loggedUser.api_key
-      }
-    }
-    const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
-    const json = await response.json()
-    console.log(json)
-    if (json != null) {
-      for (let i = 0; i < json.length; ++i) {
-        if ((json[i]['id']) === this.micropost.id) {
-          console.log()
-          this.voted = true
-        }
-      }
-    }
+  async mounted () {
+    await axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
+      .then(response => (this.micropost = response.data))
+    /* const response2 = await fetch(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+     const json = await response2.json()
+     console.log(json)
+     this.comments = json */
+
+    await axios.get(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
+      .then(response => (this.comments = response.data)
+      )
   },
   methods: {
+    onlyParents (arr) {
+      if (arr && arr.length) {
+        for (let i = 0; i < arr.length; ++i) {
+          if (arr[i].parent_id != null) {
+            arr.splice(i, 1)
+          }
+        }
+        return arr
+      }
+    },
+    addComment () {
+      axios.post(BASE_URL + 'comments.json',
+        {
+          'micropost_id': this.$route.params.id,
+          'text': document.getElementById('comment').value,
+          'parent_id': null
+        },
+        {
+          'headers': {
+            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      window.location.reload()
+    },
     async voteLike () {
       const requestOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': globalStore.loggedUser.api_key
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
         }
       }
       console.log(this.micropost.id)
@@ -118,11 +122,32 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': globalStore.loggedUser.api_key
+          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
         }
       }
       await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       this.voted = false
+    }
+  },
+  async beforeCreate () {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+      }
+    }
+    const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
+    const json = await response.json()
+    console.log(json)
+    if (json != null) {
+      for (let i = 0; i < json.length; ++i) {
+        if ((json[i]['id']) === this.micropost.id) {
+          console.log()
+          this.voted = true
+        }
+      }
     }
   }
 }
@@ -133,11 +158,6 @@ export default {
   counter-increment: microposts;
   content: counter(microposts) ". ";
   color: #828282;
-}
-
-.microposts-item {
-  padding-top: 0.3em;
-  font-size: 0.9em
 }
 
 .microposts-item-details {
