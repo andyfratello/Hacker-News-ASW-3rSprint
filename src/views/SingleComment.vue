@@ -16,10 +16,10 @@
           | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </span>
     </p>
-    <p class="comment-text">
+    <!-- <p class="comment-text">
       {{ comment.text }}
-    </p>
-    <textarea v-model="text" placeholder="Edit the comment..."></textarea>
+    </p> -->
+    <textarea v-model="comment.text" placeholder="Edit the comment..."></textarea>
     <br>
     <div>
       <button v-on:click="edit">edit comment</button>
@@ -54,7 +54,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + 'users/upvoted_comments/1.json', requestOptions)
@@ -81,7 +81,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       console.log(this.item.id)
@@ -95,7 +95,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + 'comment_likes/' + this.item.id, requestOptions)
@@ -104,11 +104,11 @@ export default {
     async edit () {
       axios.put(BASE_URL + 'comments/' + this.comment.id + '.json',
         {
-          'text': this.text
+          'text': this.comment.text
         },
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         })
         .catch((err) => {

@@ -102,7 +102,7 @@ export default {
         },
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         })
         .catch((err) => {
@@ -143,7 +143,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)

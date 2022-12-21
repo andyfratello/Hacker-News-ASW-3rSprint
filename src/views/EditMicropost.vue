@@ -6,7 +6,7 @@
     </p>
     <p class="microposts-item-details">
       {{ micropost.likes_count }} points by
-      <span v-if="micropost.user_id!==1">
+      <span v-if="micropost.user_id !== globalStore.loggedUser.id">
         <router-link :to="{ path: '/users/' + micropost.user_id }" class="user-email">{{ micropost.creator_name }}</router-link>
       </span>
       <span v-else>
@@ -14,32 +14,34 @@
       </span>
       <timeago :datetime="micropost.created_at" :auto-update="60"></timeago>
     </p>
-    <p class="micropost-text">
-      {{ micropost.text }}
-    </p>
     <p class="container">
         <label>title:</label>
-        <input id="title" v-bind:placeholder="micropost.title">
+        <input id="title" v-model="micropost.title" v-bind:placeholder="micropost.title">
     </p>
     <p class="container" v-if="micropost.url !== ''">
-      <label>url: {{micropost.url}}</label>
+      <label>url: {{ micropost.url }}</label>
     </p>
     <p class="container" v-else>
       <label>text:</label>
-      <input id="text" v-bind:placeholder="micropost.text">
+      <input id="text" v-model="micropost.text" v-bind:placeholder="micropost.text">
     </p>
     <button type="submit" v-on:click= "edit">Update</button>
   </div>
 </template>
 
 <script>
-
 import MicropostItem from '../components/MicropostItem.vue'
+import {globalStore} from '../model/sesion.js'
 import axios from 'axios'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   components: {MicropostItem},
   name: 'EditMicropost',
   data: function () {
@@ -80,7 +82,7 @@ export default {
         {
           'headers': {
             'accept': 'application/json',
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy',
+            'X-API-KEY': globalStore.loggedUser.api_key,
             'Content-Type': 'application/json'
           }
         })
