@@ -28,7 +28,7 @@
         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </a>
       <span v-if="item.user_id === globalStore.loggedUser.id">|
-        <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="micropost-title">edit</router-link>
+        <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="comment-item-url">edit</router-link>
         |
         <a class="comment-item-url" v-on:click="deleteMicropost">delete</a>
       </span>

@@ -59,10 +59,12 @@ export default {
 
       //  El this.$route.params.id no funciona
       axios.put(BASE_URL + 'users/' + this.globalStore.loggedUser.id + '.json', formData, {'headers': {'X-API-KEY': globalStore.loggedUser.api_key}})
+        .then(response => {
+          console.log(response)
+        })
         .catch((err) => {
           console.log(err)
         })
-      window.location.reload()
     },
     async getUser1 () {
       const response = await fetch(BASE_URL + '/users/1.json')
