@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios'
+import {globalStore} from '../model/sesion.js'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -29,7 +30,7 @@ export default {
       await axios.post(BASE_URL + 'microposts.json', this.posts,
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         })
         .then((res) => {

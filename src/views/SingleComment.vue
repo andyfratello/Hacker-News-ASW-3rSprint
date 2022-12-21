@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <p class="comment-item-details">
-      <span v-if="comment.user_id === 1">
+      <span v-if="comment.user_id === globalStore.loggedUser.id">
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
-        <span v-if="this.voted_comment === true" class="unable_unvote">*</span>
+        <span v-if="this.voted_comment === true" class="unable_unvote"></span>
         <span v-else>
           <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
         </span>
@@ -16,10 +16,10 @@
           | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </span>
     </p>
-    <p class="comment-text">
+    <!-- <p class="comment-text">
       {{ comment.text }}
-    </p>
-    <textarea v-model="text" placeholder="Edit the comment..."></textarea>
+    </p> -->
+    <textarea v-model="comment.text" placeholder="Edit the comment..."></textarea>
     <br>
     <div>
       <button v-on:click="edit">edit comment</button>
@@ -30,10 +30,16 @@
 <script>
 import CommentItem from '../components/CommentItem.vue'
 import axios from 'axios'
+import {globalStore} from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   name: 'SingleComment',
   components: {CommentItem},
   data () {
@@ -48,7 +54,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + 'users/upvoted_comments/1.json', requestOptions)
@@ -75,7 +81,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       console.log(this.item.id)
@@ -89,7 +95,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + 'comment_likes/' + this.item.id, requestOptions)
@@ -98,11 +104,11 @@ export default {
     async edit () {
       axios.put(BASE_URL + 'comments/' + this.comment.id + '.json',
         {
-          'text': this.text
+          'text': this.comment.text
         },
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         })
         .catch((err) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="microposts-item">
     <p class="microposts-item-title">
-      <span v-if="item.user_id === 1">
+      <span v-if="item.user_id === globalStore.loggedUser.id">
         <span class="unable_unvote">*</span>
       </span>
       <span v-else>
@@ -15,7 +15,7 @@
     </p>
     <p class="microposts-item-details">
       {{ item.likes_count }} points by
-      <span v-if="item.user_id!==1">
+      <span v-if="item.user_id !== globalStore.loggedUser.id">
         <router-link :to="{ path: '/users/' + item.user_id }" class="user-email">{{ item.creator_name }}</router-link>
       </span>
       <span v-else>
@@ -27,8 +27,8 @@
       <a v-if="this.voted_microposts === true">
         | <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
       </a>
-      <span v-if="item.user_id===1">|
-        <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="micropost-title">edit</router-link>
+      <span v-if="item.user_id === globalStore.loggedUser.id">|
+        <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="comment-item-url">edit</router-link>
         |
         <a class="comment-item-url" v-on:click="deleteMicropost">delete</a>
       </span>
@@ -40,10 +40,16 @@
 
 <script>
 import axios from 'axios'
+import {globalStore} from '../model/sesion.js'
 
-const BASE_URL = 'https://mysite-mnjc.onrender.com/'
+const BASE_URL = 'https://mysite-mnjc.onrender.com'
 
 export default {
+  computed: {
+    globalStore () {
+      return globalStore
+    }
+  },
   props: ['item'],
   name: 'MicropostItem',
   data () {
@@ -57,7 +63,7 @@ export default {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+        'x-api-key': globalStore.loggedUser.api_key
       }
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/1.json', requestOptions)
@@ -79,7 +85,7 @@ export default {
       await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
         {
           'headers': {
-            'X-API-KEY': 'KEgviRuGemHSgbsYzEASWdVy'
+            'X-API-KEY': globalStore.loggedUser.api_key
           }
         }
       )
@@ -91,7 +97,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       console.log(this.item.id)
@@ -106,7 +112,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'x-api-key': 'KEgviRuGemHSgbsYzEASWdVy'
+          'x-api-key': globalStore.loggedUser.api_key
         }
       }
       await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
@@ -115,7 +121,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>
@@ -134,7 +139,6 @@ export default {
   font-size: 0.7em;
   color: #828282;
   margin-top: -0.5em;
-  cursor: pointer;
 }
 
 .microposts-item-url {
@@ -149,7 +153,6 @@ export default {
   color: #828282;
   margin-top: -0.5em;
   text-decoration: underline;
-  cursor: pointer;
 }
 
 .micropost-title {
