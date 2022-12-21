@@ -45,7 +45,7 @@ export default {
         'x-api-key': globalStore.loggedUser.api_key
       }
     }
-    const response = await fetch(BASE_URL + 'users/upvoted_comments/1.json', requestOptions)
+    const response = await fetch(BASE_URL + 'users/upvoted_comments/' + globalStore.loggedUser.id + '.json', requestOptions)
     const json = await response.json()
     //  console.log(json)
     if (json != null) {

@@ -24,7 +24,7 @@ export default {
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'users/upvoted_comments/' + this.$route.params.id + '.json', {
+    axios.get(BASE_URL + 'users/upvoted_comments/' + globalStore.loggedUser.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
         console.log(res.data)

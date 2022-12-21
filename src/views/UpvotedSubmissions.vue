@@ -23,7 +23,7 @@ export default {
     }
   },
   created: function () {
-    axios.get(BASE_URL + 'users/upvoted_submissions/' + this.$route.params.id + '.json', {
+    axios.get(BASE_URL + 'users/upvoted_submissions/' + globalStore.loggedUser.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
         this.microposts = res.data
