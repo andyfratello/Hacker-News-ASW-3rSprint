@@ -149,6 +149,8 @@ export default {
         })
       this.voted_comment = false
       this.$forceUpdate()
+      this.$router.push({name: 'Home'})
+      this.$router.back()
     }
   }
 }

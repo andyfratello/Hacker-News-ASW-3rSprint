@@ -23,7 +23,7 @@
       </span>
       <timeago :datetime="item.created_at" :auto-update="60"></timeago>
       |
-      <a class="comment-item-url" href="#">comment</a>
+      <router-link :to="{ path: '/micropost/' + item.id}" class="comment-item-url">discuss</router-link>
       <a v-if="this.voted_microposts === true">
         |
         <button class="downvoted_button_c" v-on:click="unvote">unvote</button>
@@ -122,6 +122,8 @@ export default {
       this.item.likes_count = json['likes_count']
       this.voted_microposts = false
       this.$forceUpdate()
+      this.$router.push({name: 'Home'})
+      this.$router.back()
     }
   }
 }

@@ -2,6 +2,7 @@
   <div class="home">
     <div>
       <comment-item v-for="item in comments" :key="item.id" :comment="item"/>
+      <a ></a>
     </div>
   </div>
 </template>
@@ -44,7 +45,6 @@ export default {
         console.log(err)
       })
   }
-
 }
 </script>
 
