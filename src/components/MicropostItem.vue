@@ -31,7 +31,7 @@
       <span v-if="item.user_id === globalStore.loggedUser.id">|
         <router-link :to="{ path: '/micropost/' + item.id + '/edit'}" class="comment-item-url">edit</router-link>
         |
-        <a class="comment-item-url" v-on:click="deleteMicropost">delete</a>
+        <a class="downvoted_button_c" v-on:click="deleteMicropost">delete</a>
       </span>
     </p>
     <span>
@@ -81,14 +81,15 @@ export default {
     deleteMicropost: async function () {
       console.log(this.item.id)
       console.log(BASE_URL + 'microposts' + this.item.id + '.json')
-      await axios.delete(BASE_URL + 'microposts/' + this.item.id + '.json',
+      await axios.delete(BASE_URL + '/microposts/' + this.item.id + '.json',
         {
           'headers': {
             'X-API-KEY': globalStore.loggedUser.api_key
           }
         }
       )
-      this.$forceUpdate()
+      this.$router.push({name: 'Submit'})
+      this.$router.back()
     },
     async voteLike () {
       const requestOptions = {

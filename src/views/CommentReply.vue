@@ -77,8 +77,7 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      this.$forceUpdate()
-      window.location.back()
+      await this.$router.push('/micropost/' + this.comment.micropost_id)
     }
   }
 

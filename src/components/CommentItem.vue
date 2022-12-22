@@ -112,7 +112,8 @@ export default {
           }
         }
       )
-      this.$forceUpdate()
+      this.$router.push({name: 'Submit'})
+      this.$router.back()
     },
     async voteLike () {
       const requestOptions = {
