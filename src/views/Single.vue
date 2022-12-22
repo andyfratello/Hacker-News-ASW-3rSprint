@@ -108,7 +108,8 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      this.$forceUpdate()
+      this.$router.push({name: 'Submit'})
+      this.$router.back()
     },
     async voteLike () {
       const requestOptions = {
