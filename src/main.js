@@ -4,11 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import * as filters from './utils/filter'
-import {globalStore} from './model/sesion'
 
 Vue.config.productionTip = false
-
-console.log(globalStore.first)
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

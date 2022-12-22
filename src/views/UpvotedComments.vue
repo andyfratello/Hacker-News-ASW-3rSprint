@@ -28,10 +28,8 @@ export default {
     axios.get(BASE_URL + 'users/upvoted_comments/' + globalStore.loggedUser.id + '.json', {
       'headers': { 'X-API-KEY': this.AuthStr } })
       .then((res) => {
-        console.log(res.data)
         this.commentLikes = res.data
         for (let i = 0; i < this.commentLikes.length; i++) {
-          console.log(i)
           axios.get(BASE_URL + 'comments/' + this.commentLikes[i].comment_id + '.json')
             .then((res) => {
               this.comments.push(res.data)

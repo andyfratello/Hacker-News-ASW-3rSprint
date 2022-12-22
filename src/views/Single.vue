@@ -73,10 +73,6 @@ export default {
   async mounted () {
     await axios.get(BASE_URL + 'microposts/' + this.$route.params.id + '.json')
       .then(response => (this.micropost = response.data))
-    /* const response2 = await fetch(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
-     const json = await response2.json()
-     console.log(json)
-     this.comments = json */
 
     await axios.get(`${BASE_URL}/comments.json?micropost=` + this.micropost.id)
       .then(response => (this.comments = response.data)
@@ -112,8 +108,6 @@ export default {
       this.$router.back()
     },
     deleteMicropost: async function () {
-      console.log(this.item.id)
-      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
       await axios.delete(BASE_URL + '/microposts/' + this.item.id + '.json',
         {
           'headers': {
@@ -121,7 +115,7 @@ export default {
           }
         }
       )
-      await this.$router.push({name: 'Home'})
+      await this.$router.push({name: 'Submit'})
     },
     async voteLike () {
       const requestOptions = {
@@ -134,7 +128,6 @@ export default {
       }
       const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       const json = await response.json()
-      console.log(json['likes_count'])
       this.micropost.likes_count = json['likes_count']
       this.voted = true
       this.$forceUpdate()
@@ -150,7 +143,6 @@ export default {
       }
       const response = await fetch(BASE_URL + '/microposts/' + this.micropost.id + '/likes.json', requestOptions)
       const json = await response.json()
-      console.log(json['likes_count'])
       this.micropost.likes_count = json['likes_count']
       this.voted = false
       this.$forceUpdate()
@@ -167,11 +159,9 @@ export default {
     }
     const response = await fetch(BASE_URL + '/users/upvoted_submissions/' + globalStore.loggedUser.id + '.json', requestOptions)
     const json = await response.json()
-    console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
         if ((json[i]['id']) === this.micropost.id) {
-          console.log()
           this.voted = true
         }
       }

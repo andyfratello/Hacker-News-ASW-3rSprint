@@ -49,9 +49,6 @@ export default {
       return globalStore
     }
   },
-  mounted () {
-    console.log(globalStore.loggedUser)
-  },
   methods: {
     update () {
       let formData = new FormData()
@@ -68,24 +65,15 @@ export default {
     },
     async getUser1 () {
       const response = await fetch(BASE_URL + '/users/1.json')
-      const json = await response.json()
-      console.log(json)
-      globalStore.loggedUser = json
-      console.log(globalStore.loggedUser)
+      globalStore.loggedUser = await response.json()
     },
     async getUser2 () {
       const response = await fetch(BASE_URL + '/users/2.json')
-      const json = await response.json()
-      console.log(json)
-      globalStore.loggedUser = json
-      console.log(globalStore.loggedUser)
+      globalStore.loggedUser = await response.json()
     },
     async getUser3 () {
       const response = await fetch(BASE_URL + '/users/3.json')
-      const json = await response.json()
-      console.log(json)
-      globalStore.loggedUser = json
-      console.log(globalStore.loggedUser)
+      globalStore.loggedUser = await response.json()
     }
   }
 }
