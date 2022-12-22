@@ -12,6 +12,7 @@
 <script>
 import {ref, onMounted} from 'vue'
 import CommentItem from '../components/CommentItem.vue'
+import {globalStore} from '../model/sesion'
 
 const BASE_URL = 'https://mysite-mnjc.onrender.com/'
 
@@ -22,7 +23,8 @@ export default {
     const loading = ref(true)
 
     onMounted(async () => {
-      const response = await fetch(BASE_URL + '/comments.json?user=1')
+      console.log(globalStore.loggedUser.id)
+      const response = await fetch(BASE_URL + '/comments.json?user=' + globalStore.loggedUser.id)
       const json = await response.json()
       console.log(json)
       comments.value = json

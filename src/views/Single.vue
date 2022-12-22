@@ -11,7 +11,7 @@
             <button class="upvoted_button_c" v-on:click= "voteLike">▲</button>
           </span>
         </span>
-        <router-link :to="{ path: 'micropost/' + micropost.id }" class="micropost-title">{{ micropost.title }}</router-link>
+        <span class="micropost-title">{{ micropost.title }}</span>
         <a :href="micropost.url" class='microposts-item-url'>{{ micropost.url }}</a>
       </p>
       <p class="microposts-item-details">
@@ -31,7 +31,7 @@
         <span v-if="micropost.user_id === globalStore.loggedUser.id">|
           <router-link :to="{ path: '/micropost/' + micropost.id + '/edit'}" class="comment-item-url">edit</router-link>
           |
-          <a class="comment-item-url" href="#">delete</a>
+          <a class="downvoted_button_c" v-on:click="deleteMicropost">delete</a>
         </span>
       </p>
       <p class="micropost-text">
@@ -110,6 +110,18 @@ export default {
         })
       this.$router.push({name: 'Submit'})
       this.$router.back()
+    },
+    deleteMicropost: async function () {
+      console.log(this.item.id)
+      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
+      await axios.delete(BASE_URL + '/microposts/' + this.item.id + '.json',
+        {
+          'headers': {
+            'X-API-KEY': globalStore.loggedUser.api_key
+          }
+        }
+      )
+      await this.$router.push({name: 'Home'})
     },
     async voteLike () {
       const requestOptions = {
