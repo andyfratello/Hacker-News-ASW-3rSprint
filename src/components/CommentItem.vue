@@ -81,11 +81,9 @@ export default {
     }
     const response = await fetch(BASE_URL + '/users/upvoted_comments/' + globalStore.loggedUser.id + '.json', requestOptions)
     const json = await response.json()
-    //  console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
         if ((json[i]['comment_id']) === this.comment.id) {
-          //  console.log()
           this.voted_comment = true
         }
       }
@@ -103,8 +101,6 @@ export default {
       }
     },
     deleteComment: async function () {
-      //  console.log(this.comment.id)
-      //  console.log(BASE_URL + 'microposts' + this.comment.id + '.json')
       await axios.delete(BASE_URL + '/comments/' + this.comment.id + '.json',
         {
           'headers': {
@@ -124,7 +120,6 @@ export default {
           'x-api-key': globalStore.loggedUser.api_key
         }
       }
-      //  console.log(this.comment.id)
       await fetch(BASE_URL + '/comment_likes/' + this.comment.id, requestOptions)
       await axios.get(BASE_URL + '/comments/' + this.comment.id + '.json')
         .then((res) => {

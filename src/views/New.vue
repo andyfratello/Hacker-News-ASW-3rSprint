@@ -23,9 +23,7 @@ export default {
 
     onMounted(async () => {
       const response = await fetch(BASE_URL + '/microposts.json?sort=date')
-      const json = await response.json()
-      console.log(json)
-      items.value = json
+      items.value = await response.json()
       loading.value = false
     })
     return {

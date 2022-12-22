@@ -23,11 +23,8 @@ export default {
     const loading = ref(true)
 
     onMounted(async () => {
-      console.log(globalStore.loggedUser.id)
       const response = await fetch(BASE_URL + '/comments.json?user=' + globalStore.loggedUser.id)
-      const json = await response.json()
-      console.log(json)
-      comments.value = json
+      comments.value = await response.json()
       loading.value = false
     })
     return {

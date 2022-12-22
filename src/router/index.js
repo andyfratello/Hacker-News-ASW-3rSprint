@@ -31,12 +31,8 @@ if (!globalStore.first) {
 
 async function getUser () {
   const response = await fetch('https://mysite-mnjc.onrender.com/' + '/users/1.json')
-  const json = await response.json()
-  console.log(json)
-  globalStore.loggedUser = json
+  globalStore.loggedUser = await response.json()
   globalStore.first = true
-  console.log(globalStore.loggedUser)
-  console.log(globalStore.first)
 }
 
 export default new Router({

@@ -79,8 +79,6 @@ export default {
   },
   methods: {
     deleteMicropost: async function () {
-      console.log(this.item.id)
-      console.log(BASE_URL + 'microposts' + this.item.id + '.json')
       await axios.delete(BASE_URL + '/microposts/' + this.item.id + '.json',
         {
           'headers': {
@@ -102,7 +100,6 @@ export default {
       }
       const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       const json = await response.json()
-      console.log(json['likes_count'])
       this.item.likes_count = json['likes_count']
       this.voted_microposts = true
       this.$forceUpdate()
@@ -118,7 +115,6 @@ export default {
       }
       const response = await fetch(BASE_URL + '/microposts/' + this.item.id + '/likes.json', requestOptions)
       const json = await response.json()
-      console.log(json['likes_count'])
       this.item.likes_count = json['likes_count']
       this.voted_microposts = false
       this.$forceUpdate()

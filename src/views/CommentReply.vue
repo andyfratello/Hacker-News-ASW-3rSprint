@@ -47,11 +47,9 @@ export default {
     }
     const response = await fetch(BASE_URL + 'users/upvoted_comments/' + globalStore.loggedUser.id + '.json', requestOptions)
     const json = await response.json()
-    //  console.log(json)
     if (json != null) {
       for (let i = 0; i < json.length; ++i) {
         if ((json[i]['id']) === this.item.id) {
-          //  console.log()
           this.voted_comment = true
         }
       }
