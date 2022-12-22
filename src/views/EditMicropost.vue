@@ -61,8 +61,6 @@ export default {
   },
   methods: {
     async edit () {
-      console.log(document.getElementById('title').value)
-      console.log(document.getElementById('text').value)
       if (document.getElementById('title').value !== '' && document.getElementById('text').value !== '') {
         this.data = {
           'title': document.getElementById('title').value,
