@@ -13,7 +13,7 @@ https://tree.taiga.io/project/herrero-ruby-on-rails/timeline
 
 Our webapp (1r sprint): https://fathomless-sierra-31789.herokuapp.com/
 
-Our API (2n sprint): https://mysite-mnjc.onrender.com/
+Our API (2n sprint): https://mysite-mnjc.onrender.com/ (not working)
 
 Our Client webapp (3r sprint): https://hacker-news-asw-3r-sprint.netlify.app/
 
